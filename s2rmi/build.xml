@@ -1,0 +1,26 @@
+<project name="S2RMI" default="dist" basedir=".">
+
+    <property file="project.properties" />
+
+    <target name="rmic">
+        <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+    </target>
+
+	<target name="dist">
+        <zip destfile="target/distributions/${releasefile}">
+            <zipfileset dir="." prefix="${projectDir}" includes="* docs/** lib/** src/** .externalToolBuilders/**" excludes="velocity.log classes target" />
+            <zipfileset dir="target" includes="${jarfile}" prefix="${projectDir}/lib" />
+            <zipfileset dir="target/docs" prefix="${projectDir}/docs" />
+        </zip>
+    </target>
+<!--
+	<target name="dist">
+        <zip destfile="target/distributions/${releasefile}">
+            <zipfileset dir="." prefix="${projectDir}-${version}" includes="* docs/** lib/** src/** .externalToolBuilders/**" excludes="velocity.log classes target" />
+            <zipfileset dir="target" includes="${jarfile}" prefix="${projectDir}-${version}/lib" />
+            <zipfileset dir="target/docs" prefix="${projectDir}-${version}/docs" />
+        </zip>
+    </target>
+    -->
+</project>
+

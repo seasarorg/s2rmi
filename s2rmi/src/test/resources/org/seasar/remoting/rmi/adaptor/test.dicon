@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components>
+  <component name="traceInterceptor"
+    class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
+
+  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
+    <property name="invoker">
+	  <component class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
+    </property>
+  </component>
+
+  <component name="mockInterceptor" 
+             class="org.seasar.framework.aop.interceptors.MockInterceptor">
+    <initMethod name="setReturnValue">
+      <arg>"say"</arg>
+      <arg>"Hello!"</arg>
+    </initMethod>
+  </component>
+    
+  <component name="hello" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+    <aspect>mockInterceptor</aspect>
+  </component>
+  
+  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+    <aspect>mockInterceptor</aspect>
+  </component>
+
+  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+    <aspect>mockInterceptor</aspect>
+  </component>
+
+</components>

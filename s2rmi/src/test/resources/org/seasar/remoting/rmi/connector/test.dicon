@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components>
+  <component name="traceInterceptor"
+    class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
+
+  <component name="rmiConnector" class="org.seasar.remoting.rmi.connector.RMIConnector">
+    <property name="baseURL">new java.net.URL("rmi://localhost:1099/")</property>
+  </component>
+
+  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
+    <property name="invoker">
+	  <component class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
+    </property>
+  </component>
+</components>
