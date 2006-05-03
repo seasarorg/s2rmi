@@ -43,7 +43,7 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://www.seasar.org/svn/s2remoting/trunk/s2rmi/</connection>
+    <connection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=s2rmi</url>
   </scm>
@@ -99,7 +99,7 @@
       <uniqueVersion>false</uniqueVersion>
       <id>maven.seasar.org</id>
       <name>The Seasar Foundation Maven2 Repository</name>
-      <url>scp://www.seasar.org/home/groups/s2remoting/maven/maven2</url>
+      <url>scp://www.seasar.org/home/groups/s2rmi/maven/maven2</url>
     </repository>
   </distributionManagement>
 </project>
