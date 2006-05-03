@@ -1,26 +1,26 @@
 <project name="S2RMI" default="dist" basedir=".">
-
-    <property file="project.properties" />
+	<property name="ver" value="1.0.1"/>
 
     <target name="rmic">
         <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
     </target>
 
 	<target name="dist">
-        <zip destfile="target/distributions/${releasefile}">
-            <zipfileset dir="." prefix="${projectDir}" includes="* docs/** lib/** src/** .externalToolBuilders/**" excludes="velocity.log classes target" />
-            <zipfileset dir="target" includes="${jarfile}" prefix="${projectDir}/lib" />
-            <zipfileset dir="target/docs" prefix="${projectDir}/docs" />
-        </zip>
-    </target>
-<!--
-	<target name="dist">
-        <zip destfile="target/distributions/${releasefile}">
-            <zipfileset dir="." prefix="${projectDir}-${version}" includes="* docs/** lib/** src/** .externalToolBuilders/**" excludes="velocity.log classes target" />
-            <zipfileset dir="target" includes="${jarfile}" prefix="${projectDir}-${version}/lib" />
-            <zipfileset dir="target/docs" prefix="${projectDir}-${version}/docs" />
-        </zip>
-    </target>
-    -->
+		<zip zipfile="target/S2RMI-${ver}.zip">
+			<zipfileset prefix="s2rmi" dir=".">
+				<exclude name="**/target/**"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi/lib" dir="target">
+				<include name="s2rmi-${ver}.jar"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi/resources" dir="src/test/resources">
+				<include name="log4j.properties"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi/doc" dir="../s2rmi-www">
+				<exclude name="**/download/**"/>
+				<exclude name=".project"/>
+			</zipfileset>
+		</zip>
+	</target>
 </project>
 
