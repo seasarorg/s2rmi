@@ -8,7 +8,7 @@
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI Project</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
@@ -66,6 +66,43 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>generate-rmic-stubs</id>
+              <phase>process-classes</phase>
+              <configuration>
+                <tasks>
+                  <echo>Running rmic</echo>
+                  <path id="rmic.classpath">
+                    <fileset dir="${java.home}/lib">
+                      <include name="tools.jar"/>
+                    </fileset>
+                  </path>
+
+                  <mkdir dir="target/classes"/>
+                  <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+                </tasks>
+              </configuration>
+              <goals>
+                <goal>run</goal>
+              </goals>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>com.sun</groupId>
+              <artifactId>tools</artifactId>
+              <scope>system</scope>
+              <version>1.4</version>
+              <systemPath>${java.home}/../lib/tools.jar</systemPath>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
   </build>
   <repositories>
     <repository>
@@ -83,7 +120,7 @@
     <dependency>
       <groupId>org.seasar.remoting</groupId>
       <artifactId>s2remoting</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
       <type>jar</type>
     </dependency>
     <dependency>
