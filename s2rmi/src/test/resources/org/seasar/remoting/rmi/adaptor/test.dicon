@@ -31,4 +31,6 @@
     <aspect>mockInterceptor</aspect>
   </component>
 
+  <component name="echo" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Echo"/>
+
 </components>

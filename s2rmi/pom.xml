@@ -8,7 +8,7 @@
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI Project</name>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
@@ -101,6 +101,43 @@
               <systemPath>${java.home}/../lib/tools.jar</systemPath>
             </dependency>
           </dependencies>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>source-jar</id>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <source>1.4</source>
+            <encoding>UTF-8</encoding>
+            <docencoding>UTF-8</docencoding>
+            <charset>UTF-8</charset>
+            <links>
+            	<link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/</link>
+                <link>http://java.sun.com/j2ee/1.4/docs/api/</link>
+                <link>http://aopalliance.sourceforge.net/doc/</link>
+            </links>
+          </configuration>
+          <!--
+          <executions>
+            <execution>
+              <id>javadoc-jar</id>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+          -->
         </plugin>
       </plugins>
   </build>

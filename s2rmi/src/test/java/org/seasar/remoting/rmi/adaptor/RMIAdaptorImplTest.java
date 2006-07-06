@@ -5,7 +5,9 @@ import junit.framework.TestSuite;
 
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
+import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.TooManyRegistrationRuntimeException;
+import org.seasar.remoting.rmi.filter.RMIFilter;
 
 /**
  * @author murata
@@ -26,9 +28,7 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello1", "say", null);
             fail();
         }
-        catch (Exception e) {
-            assertEquals(org.seasar.framework.container.ComponentNotFoundRuntimeException.class, e
-                    .getCause().getClass());
+        catch (ComponentNotFoundRuntimeException expected) {
         }
     }
 
@@ -37,8 +37,7 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello2", "say", null);
             fail();
         }
-        catch (Exception e) {
-            assertEquals(TooManyRegistrationRuntimeException.class, e.getCause().getClass());
+        catch (TooManyRegistrationRuntimeException expected) {
         }
     }
 
@@ -47,8 +46,7 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello", "hello", null);
             fail();
         }
-        catch (Exception e) {
-            assertEquals(MethodNotFoundRuntimeException.class, e.getCause().getClass());
+        catch (MethodNotFoundRuntimeException expected) {
         }
     }
 
@@ -58,8 +56,7 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello", "say", args);
             fail();
         }
-        catch (Exception e) {
-            assertEquals(MethodNotFoundRuntimeException.class, e.getCause().getClass());
+        catch (MethodNotFoundRuntimeException expected) {
         }
     }
 
@@ -69,9 +66,19 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello", "say", null);
             fail();
         }
-        catch (Exception e) {
-            assertEquals(NullPointerException.class, e.getCause().getClass());
+        catch (NullPointerException expected) {
         }
+    }
+
+    public void testFilter1() throws Exception {
+        adaptor.addFilter(new MyFilter1());
+        assertEquals("###hoge###", adaptor.invoke("echo", "echo", new Object[] { "hoge" }));
+    }
+
+    public void testFilter2() throws Exception {
+        adaptor.addFilter(new MyFilter1());
+        adaptor.addFilter(new MyFilter2());
+        assertEquals("###Hoge###", adaptor.invoke("echo", "echo", new Object[] { "hoge" }));
     }
 
     protected void setUp() throws Exception {
@@ -94,8 +101,36 @@ public class RMIAdaptorImplTest extends S2TestCase {
         junit.textui.TestRunner.run(suite());
     }
 
-    interface Hello {
+    public interface Hello {
 
         public String say();
+
     }
+
+    public static class Echo {
+
+        public String echo(String message) {
+            return message;
+        }
+
+    }
+
+    public static class MyFilter1 implements RMIFilter {
+
+        public Object doFilter(String componentName, String methodName, Object[] args,
+                RMIFilter filter) throws Throwable {
+            return "###" + filter.doFilter(componentName, methodName, args, filter) + "###";
+        }
+
+    }
+
+    public static class MyFilter2 implements RMIFilter {
+
+        public Object doFilter(String componentName, String methodName, Object[] args,
+                RMIFilter filter) throws Throwable {
+            return filter.doFilter(componentName, methodName, new Object[] { "Hoge" }, filter);
+        }
+
+    }
+
 }
