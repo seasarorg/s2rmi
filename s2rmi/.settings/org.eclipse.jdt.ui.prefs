@@ -1,12 +1,12 @@
-#Mon May 01 14:07:42 JST 2006
+#Mon Jul 10 14:21:31 JST 2006
 eclipse.preferences.version=1
-formatter_settings_version=8
+formatter_settings_version=10
 internal.default.compliance=default
 org.eclipse.jdt.ui.exception.name=e
 org.eclipse.jdt.ui.gettersetter.use.is=true
 org.eclipse.jdt.ui.ignorelowercasenames=true
 org.eclipse.jdt.ui.importorder=java;javax;org;com;
-org.eclipse.jdt.ui.javadoc=false
+org.eclipse.jdt.ui.javadoc=true
 org.eclipse.jdt.ui.keywordthis=false
 org.eclipse.jdt.ui.ondemandthreshold=99
 org.eclipse.jdt.ui.overrideannotation=true

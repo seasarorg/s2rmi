@@ -2,12 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry output="target/test-classes" kind="src" path="src/test/java"/>
-	<classpathentry output="target/test-classes" kind="src" path="src/test/resources"/>
-	<classpathentry output="target/example-classes" kind="src" path="src/example/java"/>
-	<classpathentry output="target/example-classes" kind="src" path="src/example/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="src" path="src/example/java"/>
+	<classpathentry kind="src" path="src/example/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/s2remoting"/>
 	<classpathentry kind="src" path="/seasar2"/>
-	<classpathentry kind="output" path="target/classes"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>

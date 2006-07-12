@@ -8,6 +8,7 @@ import org.seasar.framework.beans.MethodNotFoundRuntimeException;
 import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.TooManyRegistrationRuntimeException;
 import org.seasar.remoting.rmi.filter.RMIFilter;
+import org.seasar.remoting.rmi.filter.RMIFilterChain;
 
 /**
  * @author murata
@@ -66,7 +67,7 @@ public class RMIAdaptorImplTest extends S2TestCase {
             adaptor.invoke("hello", "say", null);
             fail();
         }
-        catch (NullPointerException expected) {
+        catch (ComponentNotFoundRuntimeException expected) {
         }
     }
 
@@ -118,8 +119,8 @@ public class RMIAdaptorImplTest extends S2TestCase {
     public static class MyFilter1 implements RMIFilter {
 
         public Object doFilter(String componentName, String methodName, Object[] args,
-                RMIFilter filter) throws Throwable {
-            return "###" + filter.doFilter(componentName, methodName, args, filter) + "###";
+                RMIFilterChain chain) throws Throwable {
+            return "###" + chain.doFilter(componentName, methodName, args) + "###";
         }
 
     }
@@ -127,8 +128,8 @@ public class RMIAdaptorImplTest extends S2TestCase {
     public static class MyFilter2 implements RMIFilter {
 
         public Object doFilter(String componentName, String methodName, Object[] args,
-                RMIFilter filter) throws Throwable {
-            return filter.doFilter(componentName, methodName, new Object[] { "Hoge" }, filter);
+                RMIFilterChain chain) throws Throwable {
+            return chain.doFilter(componentName, methodName, new Object[] { "Hoge" });
         }
 
     }

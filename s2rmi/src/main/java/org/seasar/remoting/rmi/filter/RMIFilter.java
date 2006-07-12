@@ -10,8 +10,8 @@ public interface RMIFilter {
     /**
      * フィルタ処理を実行します。
      * <p>
-     * 後続のフィルタに渡す<code>args</code>を変更することにより、リモートメソッドに渡される引数を変更することができます。
-     * 後続のフィルタがすべて処理されると、リモートオブジェクトのメソッドが呼び出され、戻り値が返されます。 フィルタは戻り値を変更することもできます。
+     * 後続のフィルタチェーンに渡す<code>args</code>を変更することにより、リモートメソッドに渡される引数を変更することができます。
+     * 後続のフィルタチェーンが処理されると、リモートオブジェクトのメソッドが呼び出され、戻り値が返されます。 フィルタは戻り値を変更することもできます。
      * </p>
      * 
      * @param componentName
@@ -20,12 +20,13 @@ public interface RMIFilter {
      *            呼び出すメソッド名
      * @param args
      *            メソッドに与えられる引数
-     * @param filter
-     *            次に処理を行うフィルタ
+     * @param chain
+     *            後続の処理を行うフィルタのチェーン
      * @return リモートメソッドの戻り値
      * @throws Throwable
+     *             フィルタ処理で例外が発生した場合にスローされます。
      */
-    Object doFilter(String componentName, String methodName, Object[] args, RMIFilter filter)
+    Object doFilter(String componentName, String methodName, Object[] args, RMIFilterChain chain)
             throws Throwable;
 
 }

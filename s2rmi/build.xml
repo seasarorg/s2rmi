@@ -2,16 +2,18 @@
 	<property name="ver" value="1.0.3-SNAPSHOT"/>
 
     <target name="rmic">
-        <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+        <rmic base="build/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
     </target>
 
 	<target name="dist">
 		<zip zipfile="target/S2RMI-${ver}.zip">
 			<zipfileset prefix="s2rmi" dir=".">
+				<exclude name="**/build/**"/>
 				<exclude name="**/target/**"/>
 			</zipfileset>
 			<zipfileset prefix="s2rmi/lib" dir="target">
 				<include name="s2rmi-${ver}.jar"/>
+				<include name="s2rmi-${ver}-sources.jar"/>
 			</zipfileset>
 			<zipfileset prefix="s2rmi/resources" dir="src/test/resources">
 				<include name="log4j.properties"/>
@@ -19,6 +21,8 @@
 			<zipfileset prefix="s2rmi/doc" dir="../s2rmi-www">
 				<exclude name="**/download/**"/>
 				<exclude name=".project"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi/doc" dir="target/site">
 			</zipfileset>
 		</zip>
 	</target>

@@ -19,7 +19,7 @@
     <aspect>traceInterceptor</aspect>
   </component>
 
-  <component name="hello" class="service.impl.HelloImpl">
+  <component name="hello_helloService" class="examples.rmi.hello.impl.HelloServiceImpl">
     <aspect>traceInterceptor</aspect>
   </component>
 </components>
