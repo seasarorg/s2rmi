@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="convention.dicon"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.ActionCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.DaoCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.DtoCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.DxoCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.HelperCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.LogicCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.PageCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.ServiceCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.InterceptorCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.creator.ValidatorCreator"/>
+	<component class="org.seasar.framework.container.hotdeploy.OndemandBehavior">
+		<initMethod name="addSubsystem">
+			<arg>
+				<component class="org.seasar.framework.container.hotdeploy.impl.OndemandSubsystemImpl"/>
+			</arg>
+		</initMethod>
+	</component>
+
+	<component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+	<component class="org.seasar.remoting.rmi.filter.RMIExternalContextFilter"/>
+	<component class="org.seasar.remoting.rmi.filter.RMIHotdeployFilter"/>
+	<component class="org.seasar.remoting.rmi.deployer.RMIAdaptorDeployer">
+		<property name="registryPort">1108</property>
+		<property name="servicePort">1109</property>
+		<initMethod name="deploy"/>
+	</component>
+
+</components>
