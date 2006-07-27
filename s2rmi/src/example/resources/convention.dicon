@@ -3,8 +3,6 @@
 	"http://www.seasar.org/dtd/components21.dtd">
 <components>
 	<component class="org.seasar.framework.convention.impl.NamingConventionImpl">
-		<!-- change here -->
-		<property name="rootPackageName">"examples"</property>
 		<property name="webPackageName">"rmi"</property>
 	</component>
 </components>
