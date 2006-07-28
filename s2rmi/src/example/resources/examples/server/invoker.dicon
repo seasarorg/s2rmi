@@ -2,6 +2,5 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<include condition="#ENV != 'ut'" path="s2rmi-cooldeploy.dicon"/>
-	<include condition="#ENV != 'ut'" path="examples/server/invoker.dicon"/>
+	<component name="componentInvoker" class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
 </components>
