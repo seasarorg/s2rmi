@@ -15,11 +15,10 @@
  */
 package org.seasar.remoting.rmi.connector;
 
+import org.seasar.framework.container.ComponentCreator;
 import org.seasar.framework.container.ComponentDef;
 import org.seasar.framework.container.InitMethodDef;
 import org.seasar.framework.container.PropertyDef;
-import org.seasar.framework.container.hotdeploy.OndemandCreator;
-import org.seasar.framework.container.hotdeploy.OndemandS2Container;
 import org.seasar.framework.container.impl.ComponentDefImpl;
 import org.seasar.framework.container.impl.InitMethodDefImpl;
 import org.seasar.framework.container.impl.PropertyDefImpl;
@@ -30,7 +29,7 @@ import org.seasar.framework.util.ClassUtil;
  * @author koichik
  * 
  */
-public class RMIConnectorOndemandCreator implements OndemandCreator {
+public class RMIConnectorOndemandCreator implements ComponentCreator {
 
     protected static final String INTERCEPTOR_CLASS_NAME = "org.seasar.remoting.common.interceptor.RemotingInterceptor";
 
@@ -54,48 +53,37 @@ public class RMIConnectorOndemandCreator implements OndemandCreator {
         this.baseURLAsString = baseURLAsString;
     }
 
-    public ComponentDef getComponentDef(final OndemandS2Container container,
-            final String rootPackageName, final Class clazz) {
+    public ComponentDef createComponentDef(final Class clazz) {
         return null;
     }
 
-    public ComponentDef getComponentDef(final OndemandS2Container container,
-            final String rootPackageName, final String componentName) {
+    public ComponentDef createComponentDef(final String componentName) {
         if (componentName.equals(remotingInterceptorName)) {
-            return createRemotingInterceptorComponentDef(container);
+            return createRemotingInterceptorComponentDef();
         }
         if (componentName.equals(rmiConnectorComponentName)) {
-            return createRMIConnectorComponentDef(container);
+            return createRMIConnectorComponentDef();
         }
         return null;
     }
 
-    protected ComponentDef createRemotingInterceptorComponentDef(final OndemandS2Container container) {
+    protected ComponentDef createRemotingInterceptorComponentDef() {
         final ComponentDef cd = new ComponentDefImpl(ClassUtil.forName(INTERCEPTOR_CLASS_NAME),
                 remotingInterceptorName);
         final PropertyDef pd = new PropertyDefImpl("connector");
         pd.setExpression(new OgnlExpression(rmiConnectorComponentName));
         cd.addPropertyDef(pd);
-        container.register(cd);
-        cd.init();
         return cd;
     }
 
-    protected ComponentDef createRMIConnectorComponentDef(final OndemandS2Container container) {
+    protected ComponentDef createRMIConnectorComponentDef() {
         final ComponentDef cd = new ComponentDefImpl(ClassUtil.forName(CONNECTOR_CLASS_NAME),
                 rmiConnectorComponentName);
         final PropertyDef pd = new PropertyDefImpl("baseURLAsString", baseURLAsString);
         cd.addPropertyDef(pd);
         final InitMethodDef imd = new InitMethodDefImpl("lookup");
         cd.addInitMethodDef(imd);
-        container.register(cd);
-        cd.init();
         return cd;
-    }
-
-    public boolean loadComponentDef(final OndemandS2Container container,
-            final String rootPackageName, final Class clazz) {
-        return false;
     }
 
 }

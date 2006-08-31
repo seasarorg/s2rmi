@@ -3,6 +3,9 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<component class="org.seasar.framework.convention.impl.NamingConventionImpl">
-		<property name="webPackageName">"rmi"</property>
+		<property name="subApplicationRootPackageName">"rmi"</property>
+		<initMethod name="addRootPackageName">
+			<arg>"examples"</arg>
+		</initMethod>
 	</component>
 </components>

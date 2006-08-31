@@ -6,7 +6,7 @@
     class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
 
   <component name="rmiConnector" class="org.seasar.remoting.rmi.connector.RMIConnector">
-    <property name="baseURL">new java.net.URL("rmi://localhost:1099/")</property>
+    <property name="baseURLAsString">"rmi://localhost:1099/"</property>
   </component>
 
   <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">

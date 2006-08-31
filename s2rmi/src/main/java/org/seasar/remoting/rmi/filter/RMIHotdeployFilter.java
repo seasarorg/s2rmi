@@ -15,7 +15,7 @@
  */
 package org.seasar.remoting.rmi.filter;
 
-import org.seasar.framework.container.hotdeploy.OndemandBehavior;
+import org.seasar.framework.container.hotdeploy.HotdeployBehavior;
 import org.seasar.framework.container.impl.S2ContainerBehavior;
 
 /**
@@ -25,13 +25,13 @@ public class RMIHotdeployFilter implements RMIFilter {
 
     public Object doFilter(final String componentName, final String methodName,
             final Object[] args, final RMIFilterChain chain) throws Throwable {
-        final OndemandBehavior ondemand = (OndemandBehavior) S2ContainerBehavior.getProvider();
-        ondemand.start();
+        final HotdeployBehavior behavior = (HotdeployBehavior) S2ContainerBehavior.getProvider();
+        behavior.start();
         try {
             return chain.doFilter(componentName, methodName, args);
         }
         finally {
-            ondemand.stop();
+            behavior.stop();
         }
     }
 
