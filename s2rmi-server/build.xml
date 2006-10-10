@@ -1,5 +1,5 @@
 <project name="S2RMI-Server" default="dist" basedir=".">
-	<property name="ver" value="1.0.3-SNAPSHOT"/>
+	<property name="ver" value="1.1.0-SNAPSHOT"/>
 
 	<target name="dist">
 		<zip zipfile="target/S2RMI-Server-${ver}.zip">
