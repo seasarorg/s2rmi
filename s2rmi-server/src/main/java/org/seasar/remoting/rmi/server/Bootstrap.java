@@ -111,6 +111,10 @@ public class Bootstrap {
 
     protected void setupClasspath(final String[] pathStrings) throws IOException {
         final List urls = new ArrayList();
+        for (int i = 0; i < pathStrings.length; ++i) {
+            addPath(urls, new File(pathStrings[i]));
+        }
+
         final File bootstrapJarFile = getBootstrapJarFile();
         if (bootstrapJarFile != null) {
             final File[] files = getJarFiles(bootstrapJarFile.getParentFile());
@@ -118,9 +122,7 @@ public class Bootstrap {
                 addPath(urls, files[i]);
             }
         }
-        for (int i = 0; i < pathStrings.length; ++i) {
-            addPath(urls, new File(pathStrings[i]));
-        }
+
         final ClassLoader classLoader = new URLClassLoader((URL[]) urls
                 .toArray(new URL[urls.size()]));
         Thread.currentThread().setContextClassLoader(classLoader);
