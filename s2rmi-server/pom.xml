@@ -70,7 +70,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>org.seasar.remoting.rmi.server.Bootstrap</mainClass>
+                <mainClass>org.seasar.remoting.rmi.server.Main</mainClass>
               </manifest>
             </archive>
           </configuration>

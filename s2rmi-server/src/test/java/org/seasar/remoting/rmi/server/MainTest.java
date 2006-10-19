@@ -22,26 +22,26 @@ import junit.framework.TestCase;
 /**
  * @author koichik
  */
-public class BootstrapTest extends TestCase {
+public class MainTest extends TestCase {
 
     public void testGetDicon() {
-        assertEquals("test.dicon", new Bootstrap()
+        assertEquals("test.dicon", new Main()
                 .getDicon(new String[] { "--dicon", "test.dicon" }));
     }
 
     public void testGetDicon2() {
-        assertEquals("test.dicon", new Bootstrap().getDicon(new String[] { "--classpath",
+        assertEquals("test.dicon", new Main().getDicon(new String[] { "--classpath",
                 "/usr/local/foo/bar", "--dicon", "test.dicon" }));
     }
 
     public void testGetDiconDefault() {
-        assertEquals("app.dicon", new Bootstrap().getDicon(new String[] { "--classpath",
+        assertEquals("app.dicon", new Main().getDicon(new String[] { "--classpath",
                 "/usr/local/foo/bar" }));
     }
 
     public void testGetDiconError() {
         try {
-            new Bootstrap().getDicon(new String[] { "--dicon" });
+            new Main().getDicon(new String[] { "--dicon" });
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -49,9 +49,9 @@ public class BootstrapTest extends TestCase {
     }
 
     public void testIsJar() {
-        assertTrue(new Bootstrap().isJar(new File("/foo/var/baz.jar")));
-        assertTrue(new Bootstrap().isJar(new File("/foo/var/baz.JAR")));
-        assertTrue(new Bootstrap().isJar(new File("/foo/var/baz.Jar")));
-        assertTrue(new Bootstrap().isJar(new File("/foo/var/baz.Jar")));
+        assertTrue(new Main().isJar(new File("/foo/var/baz.jar")));
+        assertTrue(new Main().isJar(new File("/foo/var/baz.JAR")));
+        assertTrue(new Main().isJar(new File("/foo/var/baz.Jar")));
+        assertTrue(new Main().isJar(new File("/foo/var/baz.Jar")));
     }
 }

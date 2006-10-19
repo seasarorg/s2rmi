@@ -13,32 +13,41 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Bootstrap {
+public class Main {
 
     protected static final String DEFAULT_DICON_FILE = "app.dicon";
     protected static final String INITIALIZER_CLASS = "org.seasar.framework.container.external.GenericS2ContainerInitializer";
     protected static final String SET_CONFIG_PATH_METHOD = "setConfigPath";
     protected static final String INITIALIZER_METHOD = "initialize";
     protected static final String DESTROY_METHOD = "destroy";
-    protected static final String BOOTSTRAP_CLASS_FILE_NAME = Bootstrap.class.getName().replace(
-            '.', '/')
+    protected static final String BOOTSTRAP_CLASS_FILE_NAME = Main.class.getName()
+            .replace('.', '/')
             + ".class";
 
-    private static final Logger logger = Logger.getLogger(Bootstrap.class.getName(),
+    private static final Logger logger = Logger.getLogger(Main.class.getName(),
             "S2RMIServerMessages");
 
+    protected static boolean waiting = true;
+
     protected Object s2container;
-    protected boolean terminate;
 
     public static void main(final String[] args) {
         logger.log(Level.INFO, "IRMI3000");
         try {
-            new Bootstrap().run(args);
+            new Main().run(args);
         }
         catch (final Exception e) {
             logger.log(Level.SEVERE, "ERMI3001", e);
             System.exit(1);
         }
+    }
+
+    public static void stop() {
+        waiting = false;
+    }
+
+    public static boolean isWaiting() {
+        return waiting;
     }
 
     protected void run(final String[] args) throws Exception {
@@ -56,17 +65,17 @@ public class Bootstrap {
                 catch (final Exception e) {
                     logger.log(Level.SEVERE, "ERMI3003", e);
                 }
-                synchronized (Bootstrap.class) {
-                    terminate = true;
+                synchronized (Main.class) {
+                    waiting = false;
                 }
             }
         });
         s2container = createS2Container(dicon);
 
         try {
-            synchronized (Bootstrap.class) {
-                while (!terminate) {
-                    Bootstrap.class.wait();
+            synchronized (Main.class) {
+                while (waiting) {
+                    Main.class.wait();
                 }
             }
         }
