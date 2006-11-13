@@ -32,16 +32,24 @@ public class RMIConnectorCustomizer implements ComponentCustomizer {
 
     protected String baseURLAsString = "rmi://localhost:1108/";
 
+    protected boolean lookupOnStartup;
+
     public void setBaseURLAsString(final String baseURLAsString) {
         this.baseURLAsString = baseURLAsString;
+    }
+
+    public void setLookupOnStartup(boolean lookupOnStartup) {
+        this.lookupOnStartup = lookupOnStartup;
     }
 
     public void customize(final ComponentDef componentDef) {
         if (componentDef.getComponentClass().getName().equals(RMI_CONNECTOR_CLASS_NAME)) {
             final PropertyDef propertyDef = new PropertyDefImpl("baseURLAsString", baseURLAsString);
             componentDef.addPropertyDef(propertyDef);
-            final InitMethodDef initMethodDef = new InitMethodDefImpl("lookup");
-            componentDef.addInitMethodDef(initMethodDef);
+            if (lookupOnStartup) {
+                final InitMethodDef initMethodDef = new InitMethodDefImpl("lookup");
+                componentDef.addInitMethodDef(initMethodDef);
+            }
         }
     }
 
