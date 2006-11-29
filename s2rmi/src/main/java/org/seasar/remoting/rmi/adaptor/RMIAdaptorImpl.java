@@ -18,13 +18,15 @@ import org.seasar.remoting.rmi.filter.RMIFilterChain;
  */
 public class RMIAdaptorImpl implements RMIAdaptor {
 
+    // constants
     public static final String invoker_BINDING = "bindingType=may";
 
-    private String invokerName;
+    // instance fields
+    protected String invokerName;
 
-    private ComponentInvoker invoker;
+    protected ComponentInvoker invoker;
 
-    public List filters = new ArrayList();
+    protected List filters = new ArrayList();
 
     public Object invoke(final String componetName, final String methodName, final Object[] args)
             throws RemoteException, Exception {
@@ -32,6 +34,9 @@ public class RMIAdaptorImpl implements RMIAdaptor {
             return new RMIFilterChainImpl().doFilter(componetName, methodName, args);
         }
         catch (final Exception e) {
+            throw e;
+        }
+        catch (final Error e) {
             throw e;
         }
         catch (final Throwable t) {
@@ -49,7 +54,7 @@ public class RMIAdaptorImpl implements RMIAdaptor {
      * @param invokerName
      *            {@link org.seasar.extension.component.ComponentInvoker}のコンポーネント名
      */
-    public void setInvokerName(String invokerName) {
+    public void setInvokerName(final String invokerName) {
         this.invokerName = invokerName;
     }
 
