@@ -3,5 +3,4 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<include path="aop.dicon"/>
-	<include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
 </components>
