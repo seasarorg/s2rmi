@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
  */
 public interface RMIAdaptor extends Remote {
 
+    // contants
     public static String EXPORT_NAME = "RMIAdaptor";
 
     /**

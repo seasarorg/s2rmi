@@ -11,14 +11,16 @@ import org.seasar.remoting.common.deployer.Deployer;
 import org.seasar.remoting.rmi.adaptor.RMIAdaptor;
 
 /**
- * RMIAdaptorをRMIレジストリに登録するクラス.
+ * RMIAdaptorをRMIレジストリに登録するクラスです。
  * 
  * @author Kenichiro Murata
  */
 public class RMIAdaptorDeployer implements Deployer {
 
+    // static fields
     private final static Logger logger = Logger.getLogger(RMIAdaptorDeployer.class);
 
+    // instance fields
     private RMIAdaptor adaptor;
 
     private RMIClientSocketFactory clientSocketFactory = null;
@@ -29,84 +31,90 @@ public class RMIAdaptorDeployer implements Deployer {
 
     private int servicePort = 0;
 
-    /**
-     * @see org.seasar.remoting.common.deployer.Deployer#deploy()
-     */
     public void deploy() {
         Registry registry;
         try {
-            this.isSetAdaptor();
+            isSetAdaptor();
 
             if (logger.isDebugEnabled()) {
-                logger.log("DRMI0001", new Object[] { Integer.toString(this.registryPort) });
+                logger.log("DRMI0001", new Object[] { Integer.toString(registryPort) });
             }
 
-            registry = LocateRegistry.createRegistry(this.registryPort);
+            registry = LocateRegistry.createRegistry(registryPort);
 
-            if (this.clientSocketFactory != null && this.serverSocketFactory != null) {
+            if (clientSocketFactory != null && serverSocketFactory != null) {
                 if (logger.isDebugEnabled()) {
-                    logger.log("DRMI0002", new Object[] { Integer.toString(this.servicePort) });
+                    logger.log("DRMI0002", new Object[] { Integer.toString(servicePort) });
                 }
-                UnicastRemoteObject.exportObject(this.adaptor, this.servicePort,
-                        this.clientSocketFactory, this.serverSocketFactory);
+                UnicastRemoteObject.exportObject(adaptor, servicePort, clientSocketFactory,
+                        serverSocketFactory);
             }
             else {
                 if (logger.isDebugEnabled()) {
-                    logger.log("DRMI0003", new Object[] { Integer.toString(this.servicePort) });
+                    logger.log("DRMI0003", new Object[] { Integer.toString(servicePort) });
                 }
-                UnicastRemoteObject.exportObject(this.adaptor, this.servicePort);
+                UnicastRemoteObject.exportObject(adaptor, servicePort);
             }
 
             if (logger.isDebugEnabled()) {
                 logger.log("DRMI0004", new Object[] { RMIAdaptor.EXPORT_NAME });
             }
 
-            registry.rebind(RMIAdaptor.EXPORT_NAME, this.adaptor);
+            registry.rebind(RMIAdaptor.EXPORT_NAME, adaptor);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             logger.log(e);
         }
     }
 
     final void isSetAdaptor() throws IllegalArgumentException {
-        if (this.adaptor == null) {
+        if (adaptor == null) {
             throw new IllegalArgumentException("RMIAdaptor is not defined.");
         }
     }
 
     /**
+     * RMIアダプタを設定します。
+     * 
      * @param adaptor
-     *            adaptor を設定。
+     *            RMIアダプタ
      */
-    public void setAdaptor(RMIAdaptor adaptor) {
+    public void setAdaptor(final RMIAdaptor adaptor) {
         this.adaptor = adaptor;
     }
 
     /**
+     * ソケットファクトリを追加します。
+     * 
      * @param clientSocketFactory
-     *            clientSocketFactory を設定。
+     *            クライアントソケットファクトリ
      * @param serverSocketFactory
-     *            serverSocketFactory を設定。
+     *            サーバソケットファクトリ
      */
-    public void addCustomSocketFactory(RMIClientSocketFactory clientSocketFactory,
-            RMIServerSocketFactory serverSocketFactory) {
+    public void addCustomSocketFactory(final RMIClientSocketFactory clientSocketFactory,
+            final RMIServerSocketFactory serverSocketFactory) {
         this.clientSocketFactory = clientSocketFactory;
         this.serverSocketFactory = serverSocketFactory;
     }
 
     /**
+     * RMIレジストリのポート番号を設定します。
+     * 
      * @param registryPort
-     *            registryPort を設定。
+     *            RMIレジストリのポート番号
      */
-    public void setRegistryPort(int registryPort) {
+    public void setRegistryPort(final int registryPort) {
         this.registryPort = registryPort;
     }
 
     /**
+     * RMIサーバのポートを設定します。
+     * 
      * @param servicePort
-     *            servicePort を設定。
+     *            RMIサーバのポート
      */
-    public void setServicePort(int servicePort) {
+    public void setServicePort(final int servicePort) {
         this.servicePort = servicePort;
     }
+
 }

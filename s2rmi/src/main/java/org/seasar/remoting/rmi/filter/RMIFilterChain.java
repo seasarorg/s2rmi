@@ -16,6 +16,8 @@
 package org.seasar.remoting.rmi.filter;
 
 /**
+ * 後続の{@link RMIFilter RMIフィルタ}を呼び出すためにS2RMIによって提供されるオブジェクトです。
+ * 
  * @author koichik
  * 
  */

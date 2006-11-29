@@ -23,14 +23,16 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.exception.EmptyRuntimeException;
 
 /**
+ * RMIサーバプロセスにおいてS2コンテナの{@link org.seasar.framework.container.ExternalContext 外部コンテキスト}を提供します。
+ * 
  * @author koichik
  */
 public class RMIExternalContextFilter implements RMIFilter {
 
     public Object doFilter(final String componentName, final String methodName,
             final Object[] args, final RMIFilterChain chain) throws Throwable {
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        ExternalContext externalContext = container.getExternalContext();
+        final S2Container container = SingletonS2ContainerFactory.getContainer();
+        final ExternalContext externalContext = container.getExternalContext();
         if (externalContext == null) {
             throw new EmptyRuntimeException("externalContext");
         }

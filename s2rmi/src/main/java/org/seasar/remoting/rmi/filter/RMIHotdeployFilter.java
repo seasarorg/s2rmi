@@ -15,23 +15,23 @@
  */
 package org.seasar.remoting.rmi.filter;
 
-import org.seasar.framework.container.hotdeploy.HotdeployBehavior;
-import org.seasar.framework.container.impl.S2ContainerBehavior;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 
 /**
+ * S2RMIサーバ上でHOT deployをサポートするための｛@link RMIFilter RMIフィルタ}です。
+ * 
  * @author koichik
  */
 public class RMIHotdeployFilter implements RMIFilter {
 
     public Object doFilter(final String componentName, final String methodName,
             final Object[] args, final RMIFilterChain chain) throws Throwable {
-        final HotdeployBehavior behavior = (HotdeployBehavior) S2ContainerBehavior.getProvider();
-        behavior.start();
+        HotdeployUtil.start();
         try {
             return chain.doFilter(componentName, methodName, args);
         }
         finally {
-            behavior.stop();
+            HotdeployUtil.stop();
         }
     }
 

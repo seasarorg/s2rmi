@@ -23,25 +23,49 @@ import org.seasar.framework.container.impl.InitMethodDefImpl;
 import org.seasar.framework.container.impl.PropertyDefImpl;
 
 /**
+ * SMART deployにおいて{@link RMIConnector}のコンポーネント定義をカスタマイズするためのコンポーネントカスタマイザです。
+ * 
  * @author koichik
  * 
  */
 public class RMIConnectorCustomizer implements ComponentCustomizer {
 
+    // constants
     protected static final String RMI_CONNECTOR_CLASS_NAME = "org.seasar.remoting.rmi.connector.RMIConnector";
 
+    // instance fields
     protected String baseURLAsString = "rmi://localhost:1108/";
 
     protected boolean lookupOnStartup;
 
+    /**
+     * ベースURLを文字列で設定します。
+     * 
+     * @param baseURLAsString
+     *            ベースURLの文字列です
+     */
     public void setBaseURLAsString(final String baseURLAsString) {
         this.baseURLAsString = baseURLAsString;
     }
 
-    public void setLookupOnStartup(boolean lookupOnStartup) {
+    /**
+     * 起動時にスタブをルックアップする場合は<code>true</code>を設定します。
+     * 
+     * @param lookupOnStartup
+     *            起動時にスタブをルックアップする場合は<code>true</code>
+     */
+    public void setLookupOnStartup(final boolean lookupOnStartup) {
         this.lookupOnStartup = lookupOnStartup;
     }
 
+    /**
+     * コンポーネント定義をカスタマイズします。
+     * <p>
+     * {@link RMIConnector}のコンポーネント定義にベースURLを文字列で設定するための プロパティ定義を追加します。
+     * <code>lookupOnStartup</code>プロパティが<code>true</code>に設定されている場合は
+     * {@link RMIConnector#lookup}を起動するための初期化メソッドインジェクション定義を追加します。
+     * </p>
+     */
     public void customize(final ComponentDef componentDef) {
         if (componentDef.getComponentClass().getName().equals(RMI_CONNECTOR_CLASS_NAME)) {
             final PropertyDef propertyDef = new PropertyDefImpl("baseURLAsString", baseURLAsString);

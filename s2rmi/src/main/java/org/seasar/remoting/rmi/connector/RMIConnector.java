@@ -20,9 +20,11 @@ import org.seasar.remoting.rmi.adaptor.RMIAdaptor;
  */
 public class RMIConnector extends URLBasedConnector {
 
-    private static final int DEFAULT_PORT = 1099;
+    // constants
+    public static final int DEFAULT_PORT = 1099;
 
-    private RMIAdaptor adaptorStub;
+    // instance fields
+    protected RMIAdaptor adaptorStub;
 
     /**
      * インスタンスを構築します。
@@ -64,8 +66,8 @@ public class RMIConnector extends URLBasedConnector {
      * @param baseURL
      *            ベースURLの文字列です
      */
-    public void setBaseURLAsString(final String urlString) throws MalformedURLException {
-        setBaseURL(new URL(null, urlString, new UnopenableURLStreamHandler(DEFAULT_PORT)));
+    public void setBaseURLAsString(final String baseURL) throws MalformedURLException {
+        setBaseURL(new URL(null, baseURL, new UnopenableURLStreamHandler(DEFAULT_PORT)));
     }
 
     /**
