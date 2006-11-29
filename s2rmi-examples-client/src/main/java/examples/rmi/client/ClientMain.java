@@ -22,8 +22,15 @@ public class ClientMain {
             ((HotdeployBehavior) behavior).start();
         }
 
-        HelloService hello = (HelloService) container.getComponent(HelloService.class);
-        System.out.println(hello.say());
+        for (int i = 0; i < 5; ++i) {
+            try {
+                HelloService hello = (HelloService) container.getComponent(HelloService.class);
+                System.out.println(hello.say());
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
 
         if (behavior instanceof HotdeployBehavior) {
             ((HotdeployBehavior) behavior).stop();
