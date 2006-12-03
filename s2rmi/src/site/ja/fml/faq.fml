@@ -9,8 +9,9 @@
 			</question>
 			<answer>
 				S2RMIとは，RMIを利用して<a href="http://s2container.seasar.org">Seasar2</a>によって管理される
-				コンポーネントをリモートオブジェクトとして公開したり， リモートオブジェクトをコンポーネントとして簡単に利用できるようにする，
-				S2Remotingプロダクトファイミリの一員を開発するSeasarプロジェクトのサブプロジェクトです．
+				コンポーネントをリモートオブジェクトとして公開したり， リモートオブジェクトをコンポーネントとして簡単に利用できるようにするための，
+				Seasarプロジェクトのサブプロジェクトです．
+				<a href="http://s2remoting.seasar.org">S2Remoting</a>プロダクトファミリーの一員でもあります．
 			</answer>
 		</faq>
 		<faq id="general-advantage">

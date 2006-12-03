@@ -61,10 +61,10 @@
 
 				<h4>s2rmi.dicon</h4>
 				<p>
-					<code>s2rmi.dicon</code>でS2RMIの主要な設定を行います．
+					サーバ側の設定は配布ファイルの<code>s2rmi/resources</code>にある<code>s2rmi.dicon</code>を
+					コピーして使用してください．
 				</p>
 <source><![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
   "http://www.seasar.org/dtd/components24.dtd">
@@ -160,6 +160,52 @@
 			</subsection>
 
 			<subsection name="SMART deployを使わない場合">
+				<p>
+					サーバ側のdiconファイルに定義すべきコンポーネントは次の通りです．
+				</p>
+				<ul>
+					<li><p>サービスの実装クラス</p></li>
+					<li><p>org.seasar.extension.component.impl.ComponentInvokerImpl</p></li>
+					<li><p>org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl</p></li>
+					<li><p>org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl</p></li>
+					<li><p>org.seasar.remoting.rmi.filter.impl.RMIExternalContextFilter</p></li>
+				</ul>
+				<p>
+					リモートオブジェクトは通常サービスとしてインタフェースと実装クラスを作成します．
+					サーバ側ではサービスの実装クラスをS2コンテナに定義します．
+				</p>
+
+				<h4>server.dicon</h4>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <component name="helloService"
+      class="examples.rmi.service.impl.HelloServiceImpl">
+
+  <component name="componentInvoker"
+      class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
+
+  <component name="RMIAdapptor"
+      class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl">
+    <property name="invokerName">"componentInvoker"</property>
+  </component>
+
+  <component class="org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl">
+    <property name="registryPort">1108</property>
+    <property name="servicePort">1109</property>
+    <initMethod name="deploy"/>
+    <destroyMethod name="undeploy"/>
+  </component>
+
+  <component class="org.seasar.remoting.rmi.filter.impl.RMIExternalContextFilter"/>
+</components>
+]]></source>
+				<p>
+					RMIで使用するポート番号は<code>RMIAdaptorDeployerImpl</code>の
+					<code>servicePort</code>プロパティで設定します．
+				</p>
 			</subsection>
 		</section>
 	</body>

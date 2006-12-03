@@ -16,6 +16,7 @@
     <property name="registryPort">1108</property>
     <property name="servicePort">1109</property>
     <initMethod name="deploy"/>
+    <destroyMethod name="undeploy"/>
     <initMethod name="addCustomSocketFactory">
       <arg>
         <component class="server.rmisocfac.XorClientSocketFactory">

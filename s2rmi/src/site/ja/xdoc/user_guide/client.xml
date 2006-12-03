@@ -161,6 +161,42 @@
 			</subsection>
 
 			<subsection name="SMART deployを使わない場合">
+				<p>
+					クライアント側のdiconファイルに定義すべきコンポーネントは次の通りです．
+				</p>
+				<ul>
+					<li><p>サービスのインタフェース</p></li>
+					<li><p>org.seasar.remoting.common.interceptor.RemotingInterceptor</p></li>
+					<li><p>org.seasar.remoting.rmi.connector.RMIConnector</p></li>
+				</ul>
+				<p>
+					リモートオブジェクトは通常サービスとしてインタフェースと実装クラスを作成します．
+					クライアント側ではサービスのインタフェースのみS2コンテナに定義します．
+				</p>
+				<h4>clinet.dicon</h4>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components>
+  <component name="helloService"
+      class="examples.rmi.service.HelloService">
+    <aspect>remotingInterceptor</aspect>
+  </component>
+
+  <component name="remotingInterceptor"
+      class="org.seasar.remoting.common.interceptor.RemotingInterceptor"/>
+
+  <component class="org.seasar.remoting.rmi.connector.impl.RMIConnectorImpl">
+    <property name="baseURLAsString">"rmi://localhost:1108/"</property>
+    <initMethod name="lookup"/>
+  </component>
+</components>
+]]></source>
+				<p>
+					RMIで説属するホストとポート番号は<code>RMIConnectorImpl</code>の
+					<code>baseURLAsString</code>プロパティで設定します．
+				</p>
 			</subsection>
 		</section>
 	</body>
