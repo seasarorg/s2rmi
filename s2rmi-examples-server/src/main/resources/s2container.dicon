@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
 	"http://www.seasar.org/dtd/components24.dtd">
-<components>
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
 	<include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
 	<include condition="#ENV == 'ut'" path="hotdeploy.dicon"/>
-	<include condition="#ENV == 'ut'" path="s2rmi-hotdeploy.dicon"/>
-
-	<component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
-		<property name="invokerName">"componentInvoker"</property>
-	</component>
-	<component class="org.seasar.remoting.rmi.filter.RMIExternalContextFilter"/>
-	<component class="org.seasar.remoting.rmi.deployer.RMIAdaptorDeployer">
-		<property name="registryPort">1108</property>
-		<property name="servicePort">1109</property>
-		<initMethod name="deploy"/>
-	</component>
 </components>
