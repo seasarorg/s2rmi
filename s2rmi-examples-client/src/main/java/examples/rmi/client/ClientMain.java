@@ -1,41 +1,44 @@
+/*
+ * Copyright 2004-2006 the Seasar Foundation and the Others.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 package examples.rmi.client;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.framework.container.hotdeploy.HotdeployBehavior;
-import org.seasar.framework.container.impl.S2ContainerBehavior;
+import org.seasar.framework.container.hotdeploy.HotdeployUtil;
 
-import examples.rmi.service.HelloService;
+import examples.rmi.helper.HelloHelper;
 
 /**
- * @author Kenichiro Murata
+ * 
+ * @author koichik
  */
 public class ClientMain {
+	public static void main(String[] args) throws Exception {
+		SingletonS2ContainerFactory.init();
+		S2Container container = SingletonS2ContainerFactory.getContainer();
 
-    public static void main(String[] args) {
-        SingletonS2ContainerFactory.init();
-        S2Container container = SingletonS2ContainerFactory.getContainer();
-        container.init();
+		Class.forName(HelloHelper.class.getName());
+		for (int i = 0; i < 3; ++i) {
+			HotdeployUtil.start();
+			HelloHelper hello = (HelloHelper) container
+					.getComponent(HelloHelper.class);
+			System.out.println(hello.say());
+			HotdeployUtil.stop();
+		}
 
-        S2ContainerBehavior.Provider behavior = S2ContainerBehavior.getProvider();
-        if (behavior instanceof HotdeployBehavior) {
-            ((HotdeployBehavior) behavior).start();
-        }
-
-        for (int i = 0; i < 5; ++i) {
-            try {
-                HelloService hello = (HelloService) container.getComponent(HelloService.class);
-                System.out.println(hello.say());
-            }
-            catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        if (behavior instanceof HotdeployBehavior) {
-            ((HotdeployBehavior) behavior).stop();
-        }
-
-        SingletonS2ContainerFactory.destroy();
-    }
+		SingletonS2ContainerFactory.destroy();
+	}
 }

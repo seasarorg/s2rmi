@@ -13,12 +13,23 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.rmi.service;
+package examples.rmi.helper.impl;
+
+import examples.rmi.helper.HelloHelper;
+import examples.rmi.service.HelloService;
 
 /**
  * 
  * @author koichik
  */
-public interface HelloService {
-	public String say();
+public class HelloHelperImpl implements HelloHelper {
+	protected HelloService helloService;
+
+	public void setHelloService(HelloService helloService) {
+		this.helloService = helloService;
+	}
+
+	public String say() {
+		return helloService.say();
+	}
 }

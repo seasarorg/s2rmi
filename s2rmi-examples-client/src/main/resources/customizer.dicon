@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
-<components>
-	<component name="defaultCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
-		<property name="interceptorName">"aop.classLoaderAwareTraceInterceptor"</property>
-	</component>
-	<component name="remoteAspectCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
-		<property name="interceptorName">"remotingInterceptor"</property>
-	</component>
-	<component name="remotingInterceptorCustomizer" class="org.seasar.remoting.common.interceptor.RemotingInterceptorCustomizer">
-		<property name="connectorName">"RMIConnector"</property>
-	</component>
-	<component name="rmiConnectorCustomizer" class="org.seasar.remoting.rmi.connector.RMIConnectorCustomizer">
-		<property name="baseURLAsString">"rmi://localhost:1108/"</property>
-	</component>
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+	<!-- S2RMI 用カスタマイザのインクルード -->
+	<include path="s2rmi-customizer.dicon"/>
 
-	<component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
-		<initMethod name="addCustomizer">
-			<arg>defaultCustomizer</arg>
-		</initMethod>
-		<initMethod name="addCustomizer">
-			<arg>remoteAspectCustomizer</arg>
-		</initMethod>
-	</component>
-	<component name="interceptorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
-		<initMethod name="addCustomizer">
-			<arg>remotingInterceptorCustomizer</arg>
-		</initMethod>
-	</component>
-	<component name="connectorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
-		<initMethod name="addCustomizer">
-			<arg>rmiConnectorCustomizer</arg>
-		</initMethod>
+	<!-- S2RMI コネクタのカスタマイザ -->
+	<component name="connectorCustomizer" class="org.seasar.remoting.rmi.customizer.RMIConnectorCustomizer">
+		<!-- RMI 接続するホストやポート番号はここで設定します．-->
+		<property name="baseURLAsString">"rmi://localhost:1108/"</property>
 	</component>
 </components>

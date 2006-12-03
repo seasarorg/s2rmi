@@ -13,12 +13,12 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package examples.rmi.service;
+package examples.rmi.helper;
 
 /**
  * 
  * @author koichik
  */
-public interface HelloService {
-	public String say();
+public interface HelloHelper {
+	String say();
 }
