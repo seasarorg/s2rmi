@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - サービスの作成</title>
+	</properties>
+	<body>
+		<section name="サービスの作成">
+			<p>
+				サービスは通常のJavaインタフェースとその実装クラスとして作成します．
+				<code>java.rmi.Remote</code>インタフェースを実装したり，メソッドの<code>throws</code>節で
+				<code>java.rmi.RemoteException</code>を宣言する必要はありません．
+			</p>
+			<p>
+				以下はS2RMIのサンプルに含まれているサービスのインタフェースと実装クラスです．
+			</p>
+			<h4>service.Hello.java</h4>
+			<p>
+				<code>s2rmi-examples-client/src/main/java</code> 以下にあります．
+			</p>
+<source><![CDATA[
+package examples.rmi.service;
+
+public interface HelloService {
+	public String say();
+}
+]]></source>
+			<h4>service.impl.HelloImpl.java</h4>
+			<p>
+				<code>s2rmi-examples-client/src/main/java</code> 以下にあります．
+			</p>
+<pre><![CDATA[
+package examples.rmi.service.impl;
+
+import examples.rmi.service.HelloService;
+
+public class HelloServiceImpl implements HelloService {
+	public String say() {
+		return "Hello";
+	}
+}
+]]></pre>
+		</section>
+	</body>
+</document>

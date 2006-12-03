@@ -13,26 +13,19 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.remoting.rmi.filter;
-
-import org.seasar.framework.container.hotdeploy.HotdeployUtil;
+package org.seasar.remoting.rmi.service;
 
 /**
- * S2RMIサーバ上でHOT deployをサポートするための｛@link RMIFilter RMIフィルタ}です。
+ * S2RMIサーバプロセスを制御するサービスのインタフェースです。
  * 
  * @author koichik
+ * 
  */
-public class RMIHotdeployFilter implements RMIFilter {
+public interface S2RmiService {
 
-    public Object doFilter(final String componentName, final String methodName,
-            final Object[] args, final RMIFilterChain chain) throws Throwable {
-        HotdeployUtil.start();
-        try {
-            return chain.doFilter(componentName, methodName, args);
-        }
-        finally {
-            HotdeployUtil.stop();
-        }
-    }
+	/**
+	 * S2RMIサーバプロセスを停止します。
+	 */
+	void stop();
 
 }

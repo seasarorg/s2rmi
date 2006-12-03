@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.remoting.rmi.connector;
+package org.seasar.remoting.rmi.customizer;
 
 import org.seasar.framework.container.ComponentCustomizer;
 import org.seasar.framework.container.ComponentDef;
@@ -21,9 +21,10 @@ import org.seasar.framework.container.InitMethodDef;
 import org.seasar.framework.container.PropertyDef;
 import org.seasar.framework.container.impl.InitMethodDefImpl;
 import org.seasar.framework.container.impl.PropertyDefImpl;
+import org.seasar.remoting.rmi.connector.impl.RMIConnectorImpl;
 
 /**
- * SMART deployにおいて{@link RMIConnector}のコンポーネント定義をカスタマイズするためのコンポーネントカスタマイザです。
+ * SMART deployにおいて{@link RMIConnectorImpl}のコンポーネント定義をカスタマイズするためのコンポーネントカスタマイザです。
  * 
  * @author koichik
  * 
@@ -31,7 +32,7 @@ import org.seasar.framework.container.impl.PropertyDefImpl;
 public class RMIConnectorCustomizer implements ComponentCustomizer {
 
     // constants
-    protected static final String RMI_CONNECTOR_CLASS_NAME = "org.seasar.remoting.rmi.connector.RMIConnector";
+    protected static final String RMI_CONNECTOR_CLASS_NAME = "org.seasar.remoting.rmi.connector.impl.RMIConnectorImpl";
 
     // instance fields
     protected String baseURLAsString = "rmi://localhost:1108/";
@@ -61,9 +62,9 @@ public class RMIConnectorCustomizer implements ComponentCustomizer {
     /**
      * コンポーネント定義をカスタマイズします。
      * <p>
-     * {@link RMIConnector}のコンポーネント定義にベースURLを文字列で設定するための プロパティ定義を追加します。
+     * {@link RMIConnectorImpl}のコンポーネント定義にベースURLを文字列で設定するための プロパティ定義を追加します。
      * <code>lookupOnStartup</code>プロパティが<code>true</code>に設定されている場合は
-     * {@link RMIConnector#lookup}を起動するための初期化メソッドインジェクション定義を追加します。
+     * {@link RMIConnectorImpl#lookup}を起動するための初期化メソッドインジェクション定義を追加します。
      * </p>
      */
     public void customize(final ComponentDef componentDef) {

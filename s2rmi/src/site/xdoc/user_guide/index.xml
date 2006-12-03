@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>User Guide</title>
+	</properties>
+	<body>
+		<section name="Table of Content">
+			<ul>
+				<li><p><a href="#About">About</a></p></li>
+				<li><p><a href="#Basic Usage">Basic Usage</a></p></li>
+				<li><p><a href="#Service">Service</a></p></li>
+				<li><p><a href="#Server Settings">Server Settings</a></p></li>
+				<li><p><a href="#Client Settings">Client Settings</a></p></li>
+			</ul>
+		</section>
+
+		<section name="About">
+			<p>
+				This is a document for <code>S2RMI-1.0.1</code>.
+				Documents for older versions of S2RMI are included in their respective distribution archive file.
+			</p>
+		</section>
+
+		<section name="Basic Usage">
+			<p>
+				Files used in these examples are located under the src/example directory.
+				S2RMI makes components registered in the S2Container into remote objects.
+				service.Hello interface is a normal interface.
+				Furthermore, service.impl.HelloImpl class is an implementation class (POJO) of Hello interface.
+				Remote objects are released by S2RMI using Hello interface and its implementation class.
+			</p>
+		</section>
+
+		<section name="Service">
+			<h4>service.Hello.java</h4>
+<source><![CDATA[
+public interface Hello {
+    public String say();
+}
+]]></source>
+			<h4>service.impl.HelloImpl.java</h4>
+<source><![CDATA[
+public class HelloImpl implements Hello {
+    public String say() {
+        return "Hello";
+    }
+}
+]]></source>
+		</section>
+
+		<section name="Server Settings">
+			<p>
+				Following 3 components must be defined in a dicon file on a server.
+			</p>
+			<ul>
+				<li><p>org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl</p></li>
+				<li><p>org.seasar.remoting.rmi.deployer.RMIAdaptorDeployer</p></li>
+				<li><p>service.impl.HelloImpl (implementation class of interface of remote object to be released)</p></li>
+			</ul>
+			<p>
+				RMIAdaptorImpl class is an adapter that uses ComponentInvokerImpl class to call component registered in the S2Container.
+				RMIAdaptorDeployer registers RMIAdaptorImpl class into RMI registry.
+			</p>
+
+			<h4>server.dicon</h4>
+<source><![CDATA[
+<components>
+  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
+    <property name="invoker">
+      <component class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
+    </property>
+  </component>
+
+  <component class="org.seasar.remoting.rmi.deployer.RMIAdaptorDeployer">
+    <property name="adaptor">rmiAdapptor</property>
+    <property name="registryPort">1108</property>
+    <property name="servicePort">1109</property>
+    <initMethod name="deploy"/>
+  </component>
+
+  <component name="hello" class="service.impl.HelloImpl"/>
+</components>
+]]></source>
+
+			<h4>RMIAdaptorDeployer property</h4>
+			<dl>
+				<dt><code>&lt;property name="registryPort"&gt;</code></dt>
+				<dd>Port number of rmiregistry. When omitted, default port (1099) is used.</dd>
+				<dt><code>&lt;property name="servicePort"&gt;</code></dt>
+				<dd>Port number to be used by RMIAdaptorImpl. When omitted, port is set to the default port (0) and anonymous port is used.</dd>
+			</dl>
+
+			<h4>Starting RMIAdaptorDeployer</h4>
+			<p>
+				A component in S2Container can be called remotely by initializing the S2Container.
+				S2Container is initialized by defining &lt;initMethod name="deploy"/&gt; in the dicon file.
+			</p>
+
+			<h4>server.ServerMain.java</h4>
+<source><![CDATA[
+package server;
+
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.S2ContainerFactory;
+import org.seasar.remoting.common.deployer.Deployer;
+
+public class ServerMain {
+    public static void main(String[] args) {
+        S2ContainerFactory.create("server/server.dicon").init();
+    }
+}
+]]></source>
+
+			<p>
+				To execute ServerMain, right click on ServerMain.java in the package explorer and select [Execute]-[Java Application].
+			</p>
+		</section>
+
+		<section name="Client Settings">
+			<p>
+				Following 3 components must be defined in a dicon file on a client.
+			</p>
+			<ul>
+				<li><p>org.seasar.remoting.rmi.connector.RMIConnector</p></li>
+				<li><p>org.seasar.remoting.common.interceptor.RemotingInterceptor</p></li>
+				<li><p>service.Hello (interface to call on a remote object)</p></li>
+			</ul>
+			<p>
+				RMIConnector call retrieves RMIAdaptorImpl class from RMI registry and calls a component on the server.
+				RemotingInterceptor class uses RMIConnector to set by AOP an interface (Hello) to call on remote object.
+				Name of remote object to call and name of component to be called (hello) must be the same.
+			</p>
+			<p>
+				S2RMI is an implementation of S2Remoting.
+				Therefore, it is possible to switch so remote object are called using S2Axis just be changing connector setting in RemotingInterceptor from RMIConnector to org.seasar.remoting.axis.connector.AxisConnector.
+				Refer to <a href="http://www.seasar.org/en/s2-axis.html">Setting S2Axis Server</a> for information on using S2Axis.
+			</p>
+
+			<h4>clinet.dicon</h4>
+<source><![CDATA[
+<components>
+  <component name="rmiConnector" class="org.seasar.remoting.rmi.connector.RMIConnector">
+    <property name="baseURLAsString">"rmi://localhost:1108/"</propert>
+    <initMethod name="lookup"/>
+  </component>
+
+  <component name="remoting"
+    class="org.seasar.remoting.common.interceptor.RemotingInterceptor">
+    <property name="connector">rmiConnector</property>
+  </component>
+
+  <component name="hello" class="service.Hello">
+    <aspect>remoting</aspect>
+  </component>
+</components>
+]]></source>
+
+			<h4>Calling Remote Object</h4>
+			<p>
+				When a method in interface which is defined as AOP to RemoteingInterceptor on the client is called, following tasks are executed:
+			</p>
+<source><![CDATA[
+Hello.say() -> RMIConnector -> RMIAdaptor -> ComponentInvoker -> HelloImpl.say()
+]]></source>
+			<p>
+				Following ClientMain is an example of executable class on a client.
+			</p>
+
+			<h4>client.ClientMain.java</h4>
+<source><![CDATA[
+package client;
+
+import org.seasar.framework.container.S2Container;
+import org.seasar.framework.container.factory.S2ContainerFactory;
+import service.Hello;
+
+public class ClientMain {
+    public static void main(String[] args) {
+        S2Container container = S2ContainerFactory
+                .create("client/client.dicon");
+        container.init();
+        Hello hello = (Hello) container
+                .getComponent(service.Hello.class);
+
+        System.out.println(hello.say());
+    }
+}
+]]></source>
+			<p>
+				To execute ClientMain, right click on ClientMain.java in the package explorer and select [Execute]-[Java Application].
+			</p>
+		</section>
+	</body>
+</document>

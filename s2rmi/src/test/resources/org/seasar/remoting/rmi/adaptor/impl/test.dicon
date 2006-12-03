@@ -5,7 +5,7 @@
   <component name="traceInterceptor"
     class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
 
-  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
+  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl">
     <property name="invoker">
 	  <component class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
     </property>
@@ -19,18 +19,18 @@
     </initMethod>
   </component>
     
-  <component name="hello" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+  <component name="hello" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImplTest$Hello">
     <aspect>mockInterceptor</aspect>
   </component>
   
-  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImplTest$Hello">
     <aspect>mockInterceptor</aspect>
   </component>
 
-  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Hello">
+  <component name="hello2" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImplTest$Hello">
     <aspect>mockInterceptor</aspect>
   </component>
 
-  <component name="echo" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImplTest$Echo"/>
+  <component name="echo" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImplTest$Echo"/>
 
 </components>

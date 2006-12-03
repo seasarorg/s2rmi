@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Top</title>
+	</properties>
+	<body>
+		<section name="Welcome">
+			<p>
+				S2RMIは<a href="http://s2remoting.seasar.org">S2Remoting</a>プロダクトファミリーの一つで，
+				RMI (Remote Method Invocation) を利用して
+				<a href="http://s2container.seasar.org">Seasar2</a>によって管理されるコンポーネントをリモートオブジェクトとして公開したり，
+				リモートオブジェクトをコンポーネントとして簡単に利用できるようにするためのプロダクトです．
+			</p>
+		</section>
+		<section name="News">
+			<dl>
+				<dt>
+					2006/12/04
+				</dt>
+				<dd>
+					S2RMI-1.1.0 をリリースしました． (<a href="downloads.html">ダウンロード</a>)
+				</dd>
+			</dl>
+		</section>
+	</body>
+</document>

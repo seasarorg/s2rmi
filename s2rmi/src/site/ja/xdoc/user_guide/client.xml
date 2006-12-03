@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - クライアント側の設定</title>
+	</properties>
+	<body>
+		<section name="クライアント側の設定">
+			<p>
+				クライアント側で必要な設定は次の通りです．
+			</p>
+			<ul>
+				<li><p>コンポーネントのインタフェースにS2Remotingのインターセプタを適用する．</p></li>
+				<li><p>S2RMIのコネクタを設定する．</p></li>
+			</ul>
+			<subsection name="SMART deployを使う場合">
+				<p>
+					S2RMIはSeasar2.4で導入されたSMART deployに対応しています．
+					SMART deployを利用すると設定を簡素化することができます．
+				</p>
+				<p>
+					開発時にはSMART deployの一つであるHOT deployを利用することができます．
+					HOT deployを利用すると，クライアントがWebアプリケーションの場合にWebコンテナを起動したまま
+					クライアントのソースを変更してそのままテストすることができます．
+				</p>
+				<p>
+					以下ではS2RMIサンプルのクライアント側に含まれる設定ファイルについて説明します．
+					<code>s2rmi-examples-client/src/main/resources</code> 以下にあります．
+				</p>
+
+				<h4>s2container.dicon</h4>
+				<p>
+					SMART deployを利用するには<code>s2container.dicon</code>が必要です．
+					S2RMI固有の設定は必要ありません．
+					以下は<code>env.txt</code>でHOT deploy / COOL deployを切り替えられるようにした設定の例です．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
+  <include condition="#ENV == 'ut'" path="hotdeploy.dicon"/>
+</components>
+]]></source>
+
+				<h4>convention.dicon</h4>
+				<p>
+					<code>convention.dicon</code>にはS2RemotingおよびS2RMIのルートパッケージを設定します．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <component class="org.seasar.framework.convention.impl.NamingConventionImpl">
+    <!-- アプリケーション固有のルートパッケージ -->
+    <initMethod name="addRootPackageName">
+      <arg>"examples.rmi"</arg>
+    </initMethod>
+
+    <!-- S2Remoting のルートパッケージ -->
+    <initMethod name="addRootPackageName">
+      <arg>"org.seasar.remoting.common"</arg>
+    </initMethod>
+
+    <!-- S2RMI のルートパッケージ -->
+    <initMethod name="addRootPackageName">
+      <arg>"org.seasar.remoting.rmi"</arg>
+    </initMethod>
+  </component>
+</components>
+]]></source>
+
+				<h4>creator.dicon</h4>
+				<p>
+					<code>creator.dicon</code>にはサービスのCreatorに加えて，S2Remotingのインターセプタおよび
+					S2RMIのコネクタをコンポーネントとして登録するためのCreatorを設定します．
+					S2RMIのサンプルではヘルパーも使用しているため，そのCreatorも設定しています．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include path="convention.dicon"/>
+  <include path="customizer.dicon"/>
+
+  <component class="org.seasar.framework.container.creator.HelperCreator"/>
+  <component class="org.seasar.framework.container.creator.InterceptorCreator"/>
+  <component class="org.seasar.framework.container.creator.ServiceCreator"/>
+  <component class="org.seasar.remoting.common.creator.ConnectorCreator"/>
+</components>
+]]></source>
+				<p>
+					通常のアプリケーションではより多くのCreatorが必要になります．
+					Seasar2の配布ファイルに含まれる<code>creator.dicon</code>には
+					通常のアプリケーションで必要になるCreatorが設定済みなので，そちらをベースに
+					S2RMIの<code>ConnectorCreator</code>を追加するのがいいでしょう．
+				</p>
+
+				<h4>customizer.dicon</h4>
+				<p>
+					<code>customizer.dicon</code>にはサービスに加えてS2RemotingのインターセプタおよびS2RMIのコネクタの
+					コンポーネント定義をカスタマイズするためのCustomizerを設定します．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <!-- S2RMI 用カスタマイザのインクルード -->
+  <include path="s2rmi-customizer.dicon"/>
+
+  <!-- S2RMI コネクタのカスタマイザ -->
+  <component name="connectorCustomizer" class="org.seasar.remoting.rmi.customizer.RMIConnectorCustomizer">
+    <!-- RMI 接続するホストやポート番号はここで設定します．-->
+    <property name="baseURLAsString">"rmi://localhost:1108/"</property>
+  </component>
+</components>
+]]></source>
+				<p>
+					<code>s2rmi-customizer.dicon</code>はその中で<code>default-customizer.dicon</code>を
+					インクルードしています．
+					<code>customizer.dicon</code>の中で<code>s2rmi-customizer.dicon</code>より前に
+					<code>default-customizer.dicon</code>をインクルードしないようにしてください．
+				</p>
+				<p>
+					RMIで接続するホストやポート番号は<code>RMIConnectorCustomizer</code>の
+					<code>baseURLAsString</code>プロパティにURL形式で設定します．
+				</p>
+				<p>
+					<code>s2rmi-customizer.dicon</code>はその中でサービスのカスタマイザを設定します．
+					アプリケーションでサービスのカスタマイザを変更したい場合は以下を参考に
+					<code>customizer.dicon</code>の中でサービスのカスタマイザを定義してください．
+				</p>
+<source><![CDATA[
+  <component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+    <initMethod name="addCustomizer">
+      <arg>myCustomizer</arg>
+    </initMethod>
+    <initMethod name="addCustomizer">
+      <arg>rmiServiceCustomizer</arg>
+    </initMethod>
+  </component>
+]]></source>
+				<p>
+					<code>s2rmi-customizer.dicon</code>はその中でインターセプタのカスタマイザを設定します．
+					アプリケーションでインターセプタのカスタマイザを変更したい場合は以下を参考に
+					<code>customizer.dicon</code>の中でインターセプタのカスタマイザを定義してください．
+				</p>
+<source><![CDATA[
+  <component name="interceptorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+    <initMethod name="addCustomizer">
+      <arg>myCustomizer</arg>
+    </initMethod>
+    <initMethod name="addCustomizer">
+      <arg>rmiInterceptorCustomizer</arg>
+    </initMethod>
+  </component>
+]]></source>
+			</subsection>
+
+			<subsection name="SMART deployを使わない場合">
+			</subsection>
+		</section>
+	</body>
+</document>

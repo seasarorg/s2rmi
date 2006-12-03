@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+	<part id="general">
+		<title>General</title>
+
+		<faq id="general-s2rmi">
+			<question>
+				S2RMIってなんですか？
+			</question>
+			<answer>
+				S2RMIとは，RMIを利用して<a href="http://s2container.seasar.org">Seasar2</a>によって管理される
+				コンポーネントをリモートオブジェクトとして公開したり， リモートオブジェクトをコンポーネントとして簡単に利用できるようにする，
+				S2Remotingプロダクトファイミリの一員を開発するSeasarプロジェクトのサブプロジェクトです．
+			</answer>
+		</faq>
+		<faq id="general-advantage">
+			<question>
+				S2RMIを利用するメリットはなんですか？
+			</question>
+			<answer>
+				S2RMIを使用することで，コンポーネントをリモートオブジェクトとして公開したり，
+				リモートオブジェクトをコンポーネントのように利用することができるようになります．
+				コンポーネントはリモート呼び出しを意識する必要はなく，設定次第で様々なプロトコルを利用することができます．
+			</answer>
+		</faq>
+		<!--
+		<faq id="general-">
+			<question>
+			</question>
+			<answer>
+			</answer>
+		</faq>
+		-->
+	</part>
+</faqs>

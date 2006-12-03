@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - S2RMI-Server</title>
+	</properties>
+	<body>
+		<section name="S2RMI-Server">
+			<subsection name="概要">
+				<p>
+					S2RMIを利用したアプリケーションをサーバプロセスとして起動するためにS2RMI-Serverを利用することができます．
+				</p>
+				<p>
+					S2RMI-Serverは実行可能Jarを提供します．このJarファイルは配布ファイル中の以下のディレクトリにあります．
+				</p>
+<source><![CDATA[
++- s2rmi-server/
+   +- lib/
+      +- s2rmi-server-x.x.x.jar
+]]></source>
+			</subsection>
+
+			<subsection name="ディレクトリ構成">
+				<p>
+					S2RMIサーバプロセスを実行する環境として，以下のようなディレクトリ構成を想定しています．
+				</p>
+<source><![CDATA[
++- <base>/
+   +- classes/
+   |  +- xxx.class
+   |  +- ...
+   |
+   +- config/
+   |  +- xxx.dicon
+   |  +- ...
+   |
+   +- lib/
+      +- s2rmi-server-x.x.x.jar
+      +- s2rmi-x.x.x.jar
+      +- s2-framework-x.x.x.jar
+      +- s2-extension-x.x.x.jar
+      +- ...
+]]></source>
+				<p>
+					S2RMIサーバプロセスのベースディレクトリには次のサブディレクトリを配置します．
+				</p>
+				<dl>
+					<dt><code>classes</code></dt>
+					<dd>アプリケーションのクラスファイルを配置します．</dd>
+					<dt><code>config</code></dt>
+					<dd>diconファイル等のリソースを配置します．</dd>
+					<dt><code>lib</code></dt>
+					<dd>S2RMIサーバプロセスの実行に必要なJarファイルを配置します．</dd>
+				</dl>
+			</subsection>
+
+			<subsection name="コマンドライン">
+				<p>
+					S2RMI-Serverを使ってサーバプロセスを起動するにはコマンドラインから次のように指定します．
+				</p>
+<source>
+java -jar lib/s2rmi-server-x.x.x.jar [--classpath <var>pathlist</var>] [--dicon <var>diconfile</var>]
+</source>
+			</subsection>
+
+			<subsection name="標準クラスパス">
+				<p>
+					S2RMI-Serverは自身の実行可能Jarファイルと同じディレクトリにあるJarファイルを自動的にクラスパスに設定します．
+					先のディレクトリ構成では，<code>lib</code>以下にあるJarファイルが全て自動的にクラスパスに設定されます．
+				</p>
+				<p>
+					Jarファイルがどのような順序でクラスパスに設定されるかは不定です．
+				</p>
+				<p>
+					実行可能Jarファイルでは<code>CLASSPATH</code>環境変数は無効であることに注意してください．
+				</p>
+			</subsection>
+
+			<subsection name="オプション引数">
+				<p>
+					コマンドライン引数では次のオプションを指定することができます．
+				</p>
+				<dl>
+					<dt><code>--classpath <var>pathlist</var></code></dt>
+					<dd>
+						<p>
+							追加のクラスパスリストを指定します．
+						</p>
+						<p>
+							クラスパスリストは複数のパス (ファイルまたはディレクトリ) をプラットフォーム固有のパス区切り文字
+							(Windowsではセミコロン(;)，UNIX/Linuxではコロン(:)になります) で区切って指定することができます．
+						</p>
+						<p>
+							指定されたパスがディレクトリで，その直下に一つ以上のJarファイルが存在する場合は，
+							そのディレクトリ直下に存在する全てのJarファイルがクラスパスに追加されます．<br/>
+							指定されたパスがディレクトリで，その直下にJarファイルが存在しなければ，そのディレクトリが
+							クラスパスに追加されます．<br/>
+							指定されたパスがJarファイルであれば，そのファイルがクラスパスに追加されます．
+						</p>
+						<p>
+							先のディレクトリ構成では，次のように<code>config</code>と<code>classes</code>を指定します．
+						</p>
+<source>
+java -jar lib/s2rmi-server-x.x.x.jar --classpath config:classes
+</source>
+						<p>
+							追加のクラスパスリストは標準クラスパスの前に設定されます．
+							上のように指定した場合，クラスパスの順序は次のようになります．
+						</p>
+						<ol>
+							<li><p><code>config</code></p></li>
+							<li><p><code>classes</code></p></li>
+							<li><p><code>lib/xxx.jar</code></p></li>
+							<li><p><code>lib/yyy.jar</code></p></li>
+							<li><p><code>lib/...</code></p></li>
+						</ol>
+					</dd>
+					<dt><code>--dicon <var>diconfile</var></code></dt>
+					<dd>
+						<p>
+							アプリケーションのルートとなるdiconファイルを指定します．
+							省略すると<code>app.dicon</code>になります．
+						</p>
+					</dd>
+				</dl>
+			</subsection>
+
+			<subsection name="S2RMIサーバプロセスの停止">
+				<p>
+					S2RMIサーバプロセスは複数の方法で停止することができます．
+				</p>
+				<dl>
+					<dt><kbd>Ctrl+C</kbd>による停止</dt>
+					<dd>
+						<p>
+							S2RMIサーバプロセスをコンソールから起動した場合には<kbd>Ctrl+C</kbd>により
+							プロセスを停止することができます．
+						</p>
+					</dd>
+					<dt>シグナルによる停止</dt>
+					<dd>
+						<p>
+							UNIX/LinuxではS2RMIサーバプロセスにシグナルを送ることによってプロセスを停止することができます．
+<source>
+kill <var>pid</var>
+</source>
+						</p>
+					</dd>
+					<dt>RMI呼び出しによる停止</dt>
+					<dd>
+						<p>
+							S2RMIの提供するコンポーネントをRMIで呼び出すことによってプロセスを停止することができます．
+						</p>
+						<p>
+							クライアント側で次のコンポーネントをS2コンテナから取得あるいはS2コンテナにインジェクションしてもらい，
+							<code>stop()</code>メソッドを呼び出します．
+						</p>
+						<ul>
+							<li><p><code>org.seasar.remoting.rmi.service.S2RmiService</code>クラス</p></li>
+						</ul>
+						<p>
+							このコンポーネントはSMART deployでは自動登録されます．
+						</p>
+						<p>
+							SMART deployを使用しない場合は明示的に登録してください．
+						</p>
+					</dd>
+				</dl>
+			</subsection>
+		</section>
+	</body>
+</document>

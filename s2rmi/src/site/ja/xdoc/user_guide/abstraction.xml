@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - 概要</title>
+	</properties>
+	<body>
+		<section name="概要">
+			<p>
+				S2RMIを利用するには，通常のJavaコンポーネント (POJO, Plain Old Java Objects) を作成します．
+			</p>
+			<p>
+				コンポーネントはインタフェースとその実装クラスとして作成します．
+				コンポーネントの利用者 (クライアント) はコンポーネントのインタフェースを呼び出します．<br/>
+				<img src="../images/s2remoting1.png" width="342" height="222" border="0" />
+			</p>
+			<p>
+				インタフェースの呼び出しはS2Remotingによってインターセプトされ，S2RMIの提供するコネクタにより
+				RMIを利用したリモート呼び出しが行われます．
+				サーバ側ではS2RMIのアダプタがリモート呼び出しを受け取り，コンポーネントの実装クラスを呼び出します．
+				コンポーネント実装クラスの結果はRMIよりクライアントに返されます．<br />
+				<img src="../images/s2remoting2.png" width="542" height="320" border="0" />
+			</p>
+			<p>
+				以上のことから，S2RMIを利用するには，以下の作業が必要になります．
+				<ul>
+					<li><p>コンポーネントのインタフェースと実装クラスを作成する．</p></li>
+					<li><p>クライアント側ではインターセプタとコネクタの設定をする．</p></li>
+					<li><p>サーバ側ではアダプタを設定する．</p></li>
+				</ul>
+				コンポーネントは「サービス」として作成することが推奨されています．
+			</p>
+		</section>
+	</body>
+</document>

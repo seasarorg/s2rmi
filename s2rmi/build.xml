@@ -1,28 +1,61 @@
 <project name="S2RMI" default="dist" basedir=".">
-	<property name="ver" value="1.1.0-SNAPSHOT"/>
+	<property name="ver" value="1.1.0"/>
+	<property name="releaseDate" value="2006/12/04"/>
 
     <target name="rmic">
-        <rmic base="build/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+        <rmic base="build/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>
     </target>
 
-	<target name="dist">
-		<zip zipfile="target/S2RMI-${ver}.zip">
+	<target name="fix-site">
+		<mkdir dir="target/site/en"/>
+		<move todir="target/site/en">
+			<fileset dir="target/site">
+				<exclude name="apidocs/**"/>
+				<exclude name="en/**"/>
+				<exclude name="ja/**"/>
+				<exclude name="index.html.en"/>
+				<exclude name="index.html.ja"/>
+			</fileset>
+		</move>
+		<delete file="target/site/ja/index.html.en"/>
+		<delete file="target/site/ja/index.html.ja"/>
+	</target>
+
+	<target name="dist" depends="fix-site">
+		<mkdir dir="target/site/download/${releaseDate}"/>
+		<zip zipfile="target/site/download/${releaseDate}/S2RMI-${ver}.zip">
 			<zipfileset prefix="s2rmi" dir=".">
 				<exclude name="**/build/**"/>
 				<exclude name="**/target/**"/>
 			</zipfileset>
 			<zipfileset prefix="s2rmi/lib" dir="target">
-				<include name="s2rmi-${ver}.jar"/>
-				<include name="s2rmi-${ver}-sources.jar"/>
+				<include name="*.jar"/>
 			</zipfileset>
 			<zipfileset prefix="s2rmi/resources" dir="src/test/resources">
 				<include name="log4j.properties"/>
 			</zipfileset>
-			<zipfileset prefix="s2rmi/doc" dir="../s2rmi-www">
-				<exclude name="**/download/**"/>
-				<exclude name=".project"/>
+			<zipfileset prefix="s2rmi/resources" dir="../s2rmi-examples-server/src/main/resources">
+				<include name="s2rmi.dicon"/>
 			</zipfileset>
 			<zipfileset prefix="s2rmi/doc" dir="target/site">
+				<exclude name="**/download/**"/>
+			</zipfileset>
+
+			<zipfileset prefix="s2rmi-server" dir="../s2rmi-server">
+				<exclude name="**/build/**"/>
+				<exclude name="**/target/**"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi-server/lib" dir="../s2rmi-server/target">
+				<include name="*.jar"/>
+			</zipfileset>
+
+				<zipfileset prefix="s2rmi-examples-client" dir="../s2rmi-examples-client">
+				<exclude name="**/build/**"/>
+				<exclude name="**/target/**"/>
+			</zipfileset>
+			<zipfileset prefix="s2rmi-examples-server" dir="../s2rmi-examples-server">
+				<exclude name="**/build/**"/>
+				<exclude name="**/target/**"/>
 			</zipfileset>
 		</zip>
 	</target>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド</title>
+	</properties>
+	<body>
+		<section name="目次">
+			<ul>
+				<li>
+					<p><a href="abstraction.html">概要</a></p>
+				</li>
+				<li>
+					<p><a href="service.html">サービスの作成</a></p>
+				</li>
+				<li>
+					<p>
+						<a href="client.html">クライアント側の設定</a>
+						<ul>
+							<li>
+								<p><a href="client.html#SMART deployを使う場合">SMART deployを使う場合</a></p>
+							</li>
+							<li>
+								<p><a href="client.html#SMART deployを使わない場合">SMART deployを使わない場合</a></p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="server.html">サーバ側の設定</a>
+						<ul>
+							<li>
+								<p><a href="server.html#SMART deployを使う場合">SMART deployを使う場合</a></p>
+							</li>
+							<li>
+								<p><a href="server.html#SMART deployを使わない場合">SMART deployを使わない場合</a></p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p>
+						<a href="s2rmi-server.html">S2RMI-Server</a>
+						<ul>
+							<li>
+								<p><a href="s2rmi-server.html#概要">概要</a></p>
+							</li>
+							<li>
+								<p><a href="s2rmi-server.html#ディレクトリ構成">ディレクトリ構成</a></p>
+							</li>
+							<li>
+								<p><a href="s2rmi-server.html#コマンドライン">コマンドライン</a></p>
+							</li>
+							<li>
+								<p><a href="s2rmi-server.html#クラスパス">クラスパス</a></p>
+							</li>
+							<li>
+								<p><a href="s2rmi-server.html#オプション引数">オプション引数</a></p>
+							</li>
+						</ul>
+					</p>
+				</li>
+				<li>
+					<p><a href="custom-socket.html">カスタムソケットファクトリの利用</a></p>
+				</li>
+			</ul>
+		</section>
+	</body>
+</document>

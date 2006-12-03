@@ -5,15 +5,16 @@
   <component name="traceInterceptor"
     class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
 
-  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl">
+  <component name="rmiAdapptor" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl">
     <property name="invoker">
 	  <component class="org.seasar.extension.component.impl.ComponentInvokerImpl"/>
     </property>
   </component>
 
-  <component class="org.seasar.remoting.rmi.deployer.RMIAdaptorDeployer">
+  <component class="org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl">
     <property name="adaptor">rmiAdapptor</property>
     <property name="registryPort">1108</property>
     <property name="servicePort">1109</property>
+    <destroyMethod name="undeploy"/>
   </component>
 </components>

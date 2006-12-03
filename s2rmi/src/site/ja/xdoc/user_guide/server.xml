@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - サーバ側の設定</title>
+	</properties>
+	<body>
+		<section name="サーバ側の設定">
+			<p>
+				サーバ側で必要な設定は次の通りです．
+			</p>
+			<ul>
+				<li><p>コンポーネントの実装クラスを登録する．</p></li>
+				<li><p>S2RMIのアダプタを設定する．</p></li>
+				<li><p>コンポーネントを起動するためのコンポーネント (<code>ComponentInvoker</code>)を設定する．</p></li>
+			</ul>
+			<subsection name="SMART deployを使う場合">
+				<p>
+					S2RMIはSeasar2.4で導入されたSMART deployに対応しています．
+					SMART deployを利用すると設定を簡素化することができます．
+				</p>
+				<p>
+					開発時にはSMART deployの一つであるHOT deployを利用することができます．
+					HOT deployを利用すると，RMI サーバプロセスを起動したままコンポーネントの
+					ソースを変更してそのままテストすることができます．
+				</p>
+				<p>
+					以下ではS2RMIサンプルのサーバ側に含まれる設定ファイルについて説明します．
+					<code>s2rmi-examples-server/src/main/resources</code> 以下にあります．
+				</p>
+
+				<h4>s2container.dicon</h4>
+				<p>
+					SMART deployを利用するには<code>s2container.dicon</code>が必要です．
+					S2RMI固有の設定は必要ありません．
+					以下は<code>env.txt</code>でHOT deploy / COOL deployを切り替えられるようにした設定の例です．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
+  <include condition="#ENV == 'ut'" path="hotdeploy.dicon"/>
+</components>
+]]></source>
+
+				<h4>app.dicon</h4>
+				<p>
+					<code>app.dicon</code>で<code>s2rmi.dicon</code>をインクルードします．
+					サンプルではトレースを出力するために<code>aop.dicon</code>もインクルードしています．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include path="aop.dicon"/>
+  <include path="s2rmi.dicon"/>
+</components>
+]]></source>
+
+				<h4>s2rmi.dicon</h4>
+				<p>
+					<code>s2rmi.dicon</code>でS2RMIの主要な設定を行います．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include path="s2rmi-server.dicon"/>
+  <include condition="#ENV == 'ut'" path="s2rmi-hotdeploy.dicon"/>
+
+  <component name="RMIAdapptor" class="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl">
+    <property name="invokerName">"componentInvoker"</property>
+  </component>
+  <component class="org.seasar.remoting.rmi.filter.impl.RMIExternalContextFilter"/>
+  <component class="org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl">
+    <property name="registryPort">1108</property>
+    <property name="servicePort">1109</property>
+    <initMethod name="deploy"/>
+    <destroyMethod name="undeploy"/>
+  </component>
+</components>
+]]></source>
+				<p>
+					RMIで使用するポート番号は<code>RMIAdaptorDeployerImpl</code>の
+					<code>servicePort</code>プロパティで設定します．
+				</p>
+
+				<h4>convention.dicon</h4>
+				<p>
+					<code>convention.dicon</code>にはコンポーネントのメソッドを起動する
+					<code>ComponentInvoker</code>のルートパッケージを設定します．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <component class="org.seasar.framework.convention.impl.NamingConventionImpl">
+    <!-- アプリケーション固有のルートパッケージ -->
+    <initMethod name="addRootPackageName">
+      <arg>"examples.rmi"</arg>
+    </initMethod>
+
+    <!-- ComponentInvoker のルートパッケージ -->
+    <initMethod name="addRootPackageName">
+      <arg>"org.seasar.extension.component"</arg>
+    </initMethod>
+  </component>
+</components>
+]]></source>
+
+				<h4>creator.dicon</h4>
+				<p>
+					<code>creator.dicon</code>にはサービスのCreatorに加えて，コンポーネントのメソッドを起動する
+					<code>ComponentInvoker</code>をコンポーネントとして登録するためのCreatorを設定します．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include path="convention.dicon"/>
+  <include path="customizer.dicon"/>
+
+  <component class="org.seasar.framework.container.creator.ServiceCreator"/>
+  <component class="org.seasar.extension.component.impl.ComponentInvokerCreator"/>
+</components>
+]]></source>
+				<p>
+					通常のアプリケーションではより多くのCreatorが必要になります．
+					Seasar2の配布ファイルに含まれる<code>creator.dicon</code>には
+					通常のアプリケーションで必要になるCreatorが設定済みなので，そちらをベースに
+					<code>ComponentInvokerCreator</code>を追加するのがいいでしょう．
+				</p>
+
+				<h4>customizer.dicon</h4>
+				<p>
+					<code>customizer.dicon</code>にはサービスのカスタマイザを設定します．
+					S2RMI固有の設定は必要ありません．
+					以下ではログを出力するためにサービスにトレースインターセプタを適用する設定をしています．
+				</p>
+<source><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd">
+<components xmlns:xi="http://www.w3.org/2001/XInclude">
+  <include path="default-customizer.dicon"/>
+
+  <component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+    <initMethod name="addCustomizer">
+      <arg>traceCustomizer</arg>
+    </initMethod>
+  </component>
+</components>
+]]></source>
+			</subsection>
+
+			<subsection name="SMART deployを使わない場合">
+			</subsection>
+		</section>
+	</body>
+</document>

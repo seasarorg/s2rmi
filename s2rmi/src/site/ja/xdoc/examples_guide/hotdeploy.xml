@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>サンプル解説 - HOT deploy</title>
+	</properties>
+	<body>
+		<section name="HOT deploy">
+			<subsection name="1回目のループ">
+				<p>
+					1回目のループを実行します．
+				</p>
+				<p>
+					クライアントがブレークポイントで停止していることを確認し，「Resume (F8)」します．
+					クライアントプロセスのコンソールに次のように表示されます．
+				</p>
+<source><![CDATA[
+2006-12-03 07:22:46.046 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    BEGIN examples.rmi.service.HelloService#say()
+2006-12-03 07:22:46.640 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    END examples.rmi.service.HelloService#say() : Hello
+Hello
+]]></source>
+			</subsection>
+
+			<subsection name="2回目のループ">
+				<p>
+					2回目のループを実行する前にサービスの実装クラスを変更します．
+				</p>
+				<p>
+					クライアントがブレークポイントで停止していることを確認し，次のクラスをJavaエディタで開きます．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-server</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.service.impl.HelloServiceImpl</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+<source><![CDATA[
+public class HelloServiceImpl implements HelloService {
+	public String say() {
+		return "Hello";
+	}
+}
+]]></source>
+				<p>
+					メソッドの中を次のように変更して保存します．
+				</p>
+<source><![CDATA[
+		return "Hello, S2RMI!";
+]]></source>
+				<p>
+					クライアントがブレークポイントで停止していることを確認し，「Resume (F8)」します．
+				</p>
+				<p>
+					クライアントプロセスのコンソールに次のように表示されます．
+				</p>
+<source><![CDATA[
+2006-12-03 07:23:36.500 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    BEGIN examples.rmi.service.HelloService#say()
+2006-12-03 07:23:36.546 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    END examples.rmi.service.HelloService#say() : Hello, S2RMI!
+Hello, S2RMI!
+]]></source>
+				<p>
+					サーバプロセスを再起動することなく，ソースの変更が反映されていることが確認できました．
+				</p>
+			</subsection>
+
+			<subsection name="3回目のループ">
+				<p>
+					3回目のループを実行する前にサービスのインタフェースと実装クラスを変更します．
+				</p>
+				<p>
+					クライアントがブレークポイントで停止していることを確認し，次のクラスをJavaエディタで開きます．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-client</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.service.HelloService</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+<source><![CDATA[
+public interface HelloService {
+	public String say();
+}
+]]></source>
+				<p>
+					メソッドの宣言を次のように変更して保存します．
+				</p>
+<source><![CDATA[
+	public String say(String message);
+]]></source>
+				<p>
+					次のクラスをJavaエディタで開きます．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-server</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.service.impl.HelloServiceImpl</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+<source><![CDATA[
+public class HelloServiceImpl implements HelloService {
+	public String say() {
+		return "Hello, S2RMI!";
+	}
+}
+]]></source>
+				<p>
+					メソッドを次のように変更して保存します．
+				</p>
+<source><![CDATA[
+	public String say(String message) {
+		return message + ", Hello, S2RMI!";
+	}
+]]></source>
+				<p>
+					次のクラスをJavaエディタで開きます．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-client</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.helper.impl.HelloHelperImpl</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+<source><![CDATA[
+public class HelloHelperImpl implements HelloHelper {
+	protected HelloService helloService;
+
+	public void setHelloService(HelloService helloService) {
+		this.helloService = helloService;
+	}
+
+	public String say() {
+		return helloService.say();
+	}
+}
+]]></source>
+				<p>
+					<code>say()</code>メソッドの中を次のように変更して保存します．
+				</p>
+<source><![CDATA[
+		return helloService.say("Hi");
+]]></source>
+				<p>
+					クライアントがブレークポイントで停止していることを確認し，「Resume (F8)」します．
+				</p>
+				<p>
+					クライアントプロセスのコンソールに次のように表示されます．
+				</p>
+<source><![CDATA[
+2006-12-03 07:24:33.578 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    BEGIN examples.rmi.service.HelloService#say(Hi)
+2006-12-03 07:24:33.625 [DEBUG] main org.seasar.framework.aop.interceptors.TraceInterceptor
+    END examples.rmi.service.HelloService#say(Hi) : Hi, Hello, S2RMI!
+Hi, Hello, S2RMI!
+]]></source>
+				<p>
+					クライアントプロセス・サーバプロセスとも再起動することなく，ソースの変更が反映されていることが確認できました．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Install</title>
+	</properties>
+	<body>
+		<section name="目次">
+			<ul>
+				<li>
+					<p><a href="#ダウンロード">ダウンロード</a></p>
+				</li>
+				<li>
+					<p><a href="#配布ファイルの内容">配布ファイルの内容</a></p>
+				</li>
+				<li>
+					<p><a href="#JDKでの利用">JDKでの利用</a></p>
+				</li>
+				<li>
+					<p><a href="#Eclipseでの利用">Eclipseでの利用</a></p>
+				</li>
+				<li>
+					<p><a href="#Mavenでの利用">Mavenでの利用</a></p>
+				</li>
+			</ul>
+		</section>
+		<section name="ダウンロード">
+			<p>
+				<a href="downloads.html">こちら</a>からS2RMIの配布ファイルをダウンロードしてください．
+			</p>
+		</section>
+		<section name="配布ファイルの内容">
+			<p>
+				S2RMIの配布ファイルには以下の内容が含まれています
+			</p>
+			<dl>
+				<dt>
+					<code>s2rmi</code>
+				</dt>
+				<dd>
+					S2RMI本体です．
+				</dd>
+				<dt>
+					<code>s2rmi-server</code>
+				</dt>
+				<dd>
+					S2RMIのサーバプロセスを起動するためのブートストラップです．
+				</dd>
+				<dt>
+					<code>s2rmi-example-server</code>
+				</dt>
+				<dd>
+					SMART deployに対応したS2RMIサーバのサンプルです．
+				</dd>
+				<dt>
+					<code>s2rmi-example-client</code>
+				</dt>
+				<dd>
+					SMART deployに対応したS2RMIクライアントのサンプルです．
+				</dd>
+			</dl>
+		</section>
+		<section name="JDKの利用">
+			<subsection name="事前条件">
+				<p>
+					事前に以下のプロダクトを利用できるようにしてください．
+				</p>
+				<ul>
+					<li>
+						<p><a href="http://s2container.seasar.org">Seasar2</a></p>
+					</li>
+					<li>
+						<p><a href="http://s2remoting.seasar.org">S2Remoting</a></p>
+					</li>
+				</ul>
+				<p>
+					依存するバージョンについては「<a href="dependencies.html">プロジェクトの依存関係</a>」を参照してください．
+				</p>
+			</subsection>
+			<subsection name="クラスパスの設定">
+				<p>
+					ダウンロードしたS2RMIの配布ファイルを適当なディレクトリに解凍してください．
+					解凍したディレクトリ以下の次のJarファイルをクラスパスに設定してください．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi/lib/s2rmi-<var>x.x.x</var>.jar</code></p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="Eclipseでの利用">
+			<p>
+				S2RMIの配布ファイルは，他のSeasar2関連プロダクトの多くと同様，
+				Eclipseプロジェクトをアーカイブしたものになっています．
+			</p>
+			<subsection name="事前条件">
+				<p>
+					事前に以下のプロダクトをワークスペースにインポートしてください．
+				</p>
+				<ul>
+					<li>
+						<p><a href="http://s2container.seasar.org">Seasar2</a></p>
+					</li>
+					<li>
+						<p><a href="http://s2remoting.seasar.org">S2Remoting</a></p>
+					</li>
+				</ul>
+				<p>
+					依存するバージョンについては「<a href="dependencies.html">プロジェクトの依存関係</a>」を参照してください．
+				</p>
+			</subsection>
+			<subsection name="インポート">
+				<p>
+					以下の手順でS2RMIをEclipseワークスペースにインポートしてください．
+				</p>
+				<ul>
+					<li>
+						<p>
+							ダウンロードしたS2RMIの配布ファイルをEclipseのワークスペースまたは適当なディレクトリに解凍してください．
+						</p>
+					</li>
+					<li>
+						<p>
+							Eclipseの「File」－「Import」メニューで「Import Wizard」を開きます．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Select a import source」で「General」－「Existing Project into Workspace」を選択し，
+							「Next」ボタンを押下します．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Select a root directory」でS2RMIの配布ファイルを解凍したディレクトリを指定します．
+						</p>
+					</li>
+					<li>
+						<p>
+							「Projects」で "s2rmi"，"s2rmi-server"，"s2rmi-example-server"，"s2rmi-example-client"が
+							チェックされていることを確認して「Finish」ボタンを押下します．
+						</p>
+					</li>
+				</ul>
+			</subsection>
+			<subsection name="S2RMIプロジェクトの参照">
+				<p>
+					以下の手順でS2RMIを利用するJavaプロジェクトからS2RMIを参照してください．
+				</p>
+				<ul>
+					<li>
+						<p>S2RMIを利用するJavaプロジェクトを右クリックして「Properties」メニューを選択します．</p>
+					</li>
+					<li>
+						<p>左のペインで「Java Build Path」を，右のペインで「Projects」を選択します．</p>
+					</li>
+					<li>
+						<p>「Add」ボタンを押下し，「Select projects to add:」から "s2rmi" をチェックして「OK」ボタンを押下します．</p>
+					</li>
+					<li>
+						<p>「OK」ボタンを押下します．</p>
+					</li>
+				</ul>
+			</subsection>
+		</section>
+		<section name="Maven2での利用">
+			<p>
+				S2RMIはMaven2に対応しており，SeasarプロジェクトのMaven2リポジトリにデプロイされています．
+			</p>
+			<subsection name="Maven2リポジトリ">
+				<p>
+					SeasarプロジェクトのMaven2リポジトリの利用方法については
+					「<a href="http://www.seasar.org/wiki/index.php?Maven2RepoRemote">Maven2RepoRemote</a>」を
+					参照してください．
+				</p>
+			</subsection>
+			<subsection name="グループID・成果物ID">
+				<p>
+					S2RMIのグループID・成果物IDについては「<a href="project-summary.html">プロジェクトサマリ</a>」を
+					参照してください．
+				</p>
+			</subsection>
+			<subsection name="依存関係">
+				<p>
+					S2RMIの依存関係については「<a href="dependencies.html">プロジェクトの依存関係</a>」を
+					参照してください．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

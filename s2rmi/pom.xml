@@ -11,6 +11,10 @@
   <version>1.1.0-SNAPSHOT</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
+  <issueManagement>
+    <system>JIRA</system>
+    <url><![CDATA[https://www.seasar.org/issues/browse/RMI]]></url>
+  </issueManagement>
   <inceptionYear>2005</inceptionYear>
   <mailingLists>
     <mailingList>
@@ -64,6 +68,14 @@
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <configuration>
+            <locales>en,ja</locales>
+            <inputEncoding>UTF-8</inputEncoding>
+            <outputEncoding>UTF-8</outputEncoding>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -84,7 +96,7 @@
                   </path>
 
                   <mkdir dir="target/classes"/>
-                  <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.RMIAdaptorImpl"/>
+                  <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>
                 </tasks>
               </configuration>
               <goals>
@@ -127,7 +139,6 @@
                 <link>http://aopalliance.sourceforge.net/doc/</link>
             </links>
           </configuration>
-          <!--
           <executions>
             <execution>
               <id>javadoc-jar</id>
@@ -137,7 +148,6 @@
               </goals>
             </execution>
           </executions>
-          -->
         </plugin>
       </plugins>
   </build>
@@ -161,6 +171,12 @@
       <type>jar</type>
     </dependency>
     <dependency>
+      <groupId>org.seasar.rmi</groupId>
+      <artifactId>s2rmi-server</artifactId>
+      <version>1.1.0-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-j2ee_1.4_spec</artifactId>
       <version>1.0</version>
@@ -175,5 +191,9 @@
       <name>The Seasar Foundation Maven2 Repository</name>
       <url>scp://www.seasar.org/home/groups/s2rmi/maven/maven2</url>
     </repository>
+    <site>
+      <id>maven.seasar.org</id>
+      <url>scp://www.seasar.org/home/groups/s2rmi/public_html/download</url>
+    </site>
   </distributionManagement>
 </project>

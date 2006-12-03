@@ -1,4 +1,4 @@
-package org.seasar.remoting.rmi.adaptor;
+package org.seasar.remoting.rmi.adaptor.impl;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -7,6 +7,7 @@ import org.seasar.extension.unit.S2TestCase;
 import org.seasar.framework.beans.MethodNotFoundRuntimeException;
 import org.seasar.framework.container.ComponentNotFoundRuntimeException;
 import org.seasar.framework.container.TooManyRegistrationRuntimeException;
+import org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl;
 import org.seasar.remoting.rmi.filter.RMIFilter;
 import org.seasar.remoting.rmi.filter.RMIFilterChain;
 

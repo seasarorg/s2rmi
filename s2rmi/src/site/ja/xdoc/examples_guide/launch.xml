@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>サンプル解説 - プロセスの起動</title>
+	</properties>
+	<body>
+		<section name="プロセスの起動">
+			<subsection name="サーバプロセスの起動">
+				<p>
+					次のクラスを右クリックし，「Run As」－「Java Application」を選択します．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-server</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.server.ServerMain</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+				<p>
+					コンソールに次のように表示されます．
+				</p>
+<source><![CDATA[
+2006-12-03 07:22:16.531 [DEBUG] main org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl
+    RMIレジストリをポート 1108 で作成しました。
+2006-12-03 07:22:16.593 [DEBUG] main org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl
+    RMIアダプタをサービスポート 1109 で公開しました。
+2006-12-03 07:22:16.593 [DEBUG] main org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl
+    公開したRMIアダプタをRMIレジストリにバインドしました。
+]]></source>
+			</subsection>
+
+			<subsection name="クライアントプロセスの起動">
+				<p>
+					次のクラスをJavaエディタで開きます．
+				</p>
+				<ul>
+					<li>
+						<p><code>s2rmi-examples-client</code>プロジェクト</p>
+						<ul>
+							<li><p><code>examples.rmi.client.ClientMain</code>クラス</p></li>
+						</ul>
+					</li>
+				</ul>
+<source><![CDATA[
+public class ClientMain {
+	public static void main(String[] args) throws Exception {
+		SingletonS2ContainerFactory.init();
+		S2Container container = SingletonS2ContainerFactory.getContainer();
+
+		Class.forName(HelloHelper.class.getName());
+		for (int i = 0; i < 3; ++i) {
+			HotdeployUtil.start();
+			HelloHelper hello = (HelloHelper) container
+					.getComponent(HelloHelper.class);
+			System.out.println(hello.say());
+			HotdeployUtil.stop();
+		}
+
+		SingletonS2ContainerFactory.destroy();
+	}
+}
+]]></source>
+				<p>
+					ソースの以下の部分 (35行目) にブレークポイントを設定します．
+				</p>
+<source><![CDATA[
+			HotdeployUtil.start();
+]]></source>
+				<p>
+					クラスを右クリックし，「Debug As」－「Java Application」を選択します．
+				</p>
+				<p>
+					ブレークポイントで停止します．
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

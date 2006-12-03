@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.remoting.rmi.filter;
+package org.seasar.remoting.rmi.filter.impl;
 
 import java.util.HashMap;
 
@@ -21,6 +21,8 @@ import org.seasar.framework.container.ExternalContext;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.exception.EmptyRuntimeException;
+import org.seasar.remoting.rmi.filter.RMIFilter;
+import org.seasar.remoting.rmi.filter.RMIFilterChain;
 
 /**
  * RMIサーバプロセスにおいてS2コンテナの{@link org.seasar.framework.container.ExternalContext 外部コンテキスト}を提供します。

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+	"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<include path="default-customizer.dicon"/>
+
+	<component name="rmiServiceCustomizer" class="org.seasar.framework.container.customizer.AspectCustomizer">
+		<initMethod name="addInterceptorName">
+			<arg>"remotingInterceptor"</arg>
+		</initMethod>
+	</component>
+
+	<component name="rmiInterceptorCustomizer" class="org.seasar.remoting.common.customizer.RemotingInterceptorCustomizer">
+		<property name="connectorName">"RMIConnector"</property>
+	</component>
+
+	<component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+		<initMethod name="addCustomizer">
+			<arg>traceCustomizer</arg>
+		</initMethod>
+		<initMethod name="addCustomizer">
+			<arg>rmiServiceCustomizer</arg>
+		</initMethod>
+	</component>
+
+	<component name="interceptorCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+		<initMethod name="addCustomizer">
+			<arg>rmiInterceptorCustomizer</arg>
+		</initMethod>
+	</component>
+</components>

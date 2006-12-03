@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>サンプル解説 - 概要</title>
+	</properties>
+	<body>
+		<section name="概要">
+			<p>
+				S2RMIの配布ファイルには，HOT deployに対応したサンプルが含まれています．
+				このドキュメントではS2RMIのサンプルを実行したままクライアントおよびサーバのコードを
+				変更してHOT deployの効果を確認する方法を説明します．
+			</p>
+			<subsection name="前提条件">
+				<p>
+					このドキュメントはS2RMIのサンプルをEclipseにインポートしていることを前提とします．
+					S2RMIのサンプルをEclipseにインポートする方法は「<a href="../install.html">インストール</a>」を
+					参照してください．
+				</p>
+			</subsection>
+			<subsection name="プロジェクト構成">
+				<p>
+					S2RMIのサンプルは2つのEclipseプロジェクトから構成されています．
+				</p>
+				<dl>
+					<dt><code>s2rmi-examples-client</code></dt>
+					<dd>S2RMIクライアントのサンプルです．</dd>
+					<dt><code>s2rmi-examples-server</code></dt>
+					<dd>S2RMIサーバのサンプルです．</dd>
+				</dl>
+			</subsection>
+			<subsection name="ディレクトリ構成">
+				<p>
+					各プロジェクトのディレクトリ構成は次のようになっています．
+				</p>
+<source><![CDATA[
++- src/
+   +- main/
+      +- java/
+      |  +- ... (Java sources)
+      |
+      +- resources/
+         +- ... (dicon files)
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>

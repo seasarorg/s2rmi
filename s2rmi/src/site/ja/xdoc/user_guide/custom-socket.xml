@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>ユーザガイド - カスタムソケットファクトリの利用</title>
+	</properties>
+	<body>
+		<section name="カスタムソケットファクトリの利用">
+			<p>
+				RMIAdaptorDeployerImplにはRMIClientSocketFactory，RMIServerSocketFactoryの
+				実装クラスを設定することができます．
+			</p>
+
+			<subsection name="RMIAdaptorDeployerImplの詳細定義">
+<source><![CDATA[
+  <component class="org.seasar.remoting.rmi.deployer.impl.RMIAdaptorDeployerImpl">
+    <property name="registryPort">1108</property>
+    <property name="servicePort">1109</property>
+    <initMethod name="deploy"/>
+    <initMethod name="addCustomSocketFactory">
+      <arg>
+        <component class="server.rmisocfac.XorClientSocketFactory">
+          <arg>0xAC</arg>
+        </component>
+      </arg>
+      <arg>
+        <component class="server.rmisocfac.XorServerSocketFactory">
+          <arg>0xAC</arg>
+        </component>
+      </arg>
+    </initMethod>
+  </component>
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>
