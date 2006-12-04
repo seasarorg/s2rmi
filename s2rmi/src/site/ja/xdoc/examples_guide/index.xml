@@ -17,16 +17,16 @@
 				<li>
 					<p><a href="launch.html">プロセスの起動</a></p>
 					<ul>
-						<li><p><a href="abstraction.html#サーバプロセスの起動">サーバプロセスの起動</a></p></li>
-						<li><p><a href="abstraction.html#クライアントプロセスの起動">クライアントプロセスの起動</a></p></li>
+						<li><p><a href="launch.html#サーバプロセスの起動">サーバプロセスの起動</a></p></li>
+						<li><p><a href="launch.html#クライアントプロセスの起動">クライアントプロセスの起動</a></p></li>
 					</ul>
 				</li>
 				<li>
 					<p><a href="hotdeploy.html">HOT deploy</a></p>
 					<ul>
-						<li><p><a href="abstraction.html#1回目のループ">1回目のループ</a></p></li>
-						<li><p><a href="abstraction.html#2回目のループ">2回目のループ</a></p></li>
-						<li><p><a href="abstraction.html#3回目のループ">3回目のループ</a></p></li>
+						<li><p><a href="hotdeploy.html#1回目のループ">1回目のループ</a></p></li>
+						<li><p><a href="hotdeploy.html#2回目のループ">2回目のループ</a></p></li>
+						<li><p><a href="hotdeploy.html#3回目のループ">3回目のループ</a></p></li>
 					</ul>
 				</li>
 			</ul>

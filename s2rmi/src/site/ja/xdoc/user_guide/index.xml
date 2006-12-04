@@ -52,7 +52,7 @@
 								<p><a href="s2rmi-server.html#コマンドライン">コマンドライン</a></p>
 							</li>
 							<li>
-								<p><a href="s2rmi-server.html#クラスパス">クラスパス</a></p>
+								<p><a href="s2rmi-server.html#標準クラスパス">標準クラスパス</a></p>
 							</li>
 							<li>
 								<p><a href="s2rmi-server.html#オプション引数">オプション引数</a></p>
