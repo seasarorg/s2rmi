@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>コミッタガイド</title>
+	</properties>
+	<body>
+		<section name="概要">
+			<p>
+				コミッタ向けの覚え書きです．
+			</p>
+		</section>
+
+		<section name="リリース準備">
+			<dl>
+				<dt>pom.xmlの修正</dt>
+				<dd>
+					<ul>
+						<li><p>s2rmi/pom.xml</p></li>
+						<li><p>s2rmi-server/pom.xml</p></li>
+					</ul>
+				</dd>
+				<dt>ドキュメントの修正</dt>
+				<dd>
+					<ul>
+						<li><p>s2rmi/src/site/index.xml</p></li>
+						<li><p>s2rmi/src/site/downloads.xml</p></li>
+						<li><p>s2rmi/src/site/ja/index.xml</p></li>
+						<li><p>s2rmi/src/site/ja/downloads.xml</p></li>
+					</ul>
+				</dd>
+			</dl>
+		</section>
+
+		<section name="リリース手順">
+			<dl>
+				<dt>S2RMI-Serverのビルド～デプロイ</dt>
+				<dd>
+<source>
+<kbd>cd s2rmi-server</kbd>
+<kbd>mvn clean deploy</kbd>
+</source>
+				</dd>
+				<dt>S2RMIのビルド～デプロイ</dt>
+				<dd>
+<source>
+<kbd>cd s2rmi</kbd>
+<kbd>mvn clean deploy</kbd>
+</source>
+				</dd>
+				<dt>サイトの作成</dt>
+				<dd>
+<source>
+<kbd>mvn site</kbd>
+</source>
+				</dd>
+				<dt>配布ファイルの作成</dt>
+				<dd>
+<source>
+<kbd>ant</kbd>
+</source>
+				</dd>
+				<dt>サイトのデプロイ</dt>
+				<dd>
+<source>
+<kbd>mvn site:deploy</kbd>
+</source>
+				</dd>
+			</dl>
+		</section>
+	</body>
+</document>
