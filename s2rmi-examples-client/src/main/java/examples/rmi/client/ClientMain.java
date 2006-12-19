@@ -32,11 +32,15 @@ public class ClientMain {
 
 		Class.forName(HelloHelper.class.getName());
 		for (int i = 0; i < 3; ++i) {
-			HotdeployUtil.start();
-			HelloHelper hello = (HelloHelper) container
-					.getComponent(HelloHelper.class);
-			System.out.println(hello.say());
-			HotdeployUtil.stop();
+			try {
+				HotdeployUtil.start();
+				HelloHelper hello = (HelloHelper) container
+						.getComponent(HelloHelper.class);
+				System.out.println(hello.say());
+				HotdeployUtil.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		SingletonS2ContainerFactory.destroy();
