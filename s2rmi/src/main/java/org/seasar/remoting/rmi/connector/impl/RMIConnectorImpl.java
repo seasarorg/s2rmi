@@ -20,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -54,8 +55,8 @@ public class RMIConnectorImpl extends URLBasedConnector {
         try {
             return adaptor.invoke(componentName, method.getName(), args);
         }
-        catch (final ConnectException e) {
-            resetAdaptor(adaptor);
+        catch (final Exception e) {
+            resetAdaptorIfNecessary(e, adaptor);
             throw e;
         }
     }
@@ -109,6 +110,24 @@ public class RMIConnectorImpl extends URLBasedConnector {
     }
 
     /**
+     * 例外をチェックして、必要であればRMIアダプタをリセットします。
+     * <p>
+     * 例外が{@link ConnectException}または{@link NoSuchObjectException}のいずれかであれば、
+     * RMIアダプタをリセットします。
+     * </p>
+     * 
+     * @param e
+     *            発生した例外
+     * @param adaptor
+     *            リセットするRMIアダプタ
+     */
+    protected void resetAdaptorIfNecessary(final Throwable e, final RMIAdaptor adaptor) {
+        if (e instanceof ConnectException || e instanceof NoSuchObjectException) {
+            resetAdaptor(adaptor);
+        }
+    }
+
+    /**
      * RMIアダプタをリセットします。
      * <p>
      * コネクション障害が発生した場合などに利用不能となったRMIアダプタを破棄するために呼び出されます。
@@ -122,4 +141,5 @@ public class RMIConnectorImpl extends URLBasedConnector {
             adaptorStub = null;
         }
     }
+
 }

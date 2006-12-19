@@ -8,7 +8,7 @@
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI Project</name>
-  <version>1.1.0</version>
+  <version>1.1.1-SNAPSHOT</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <issueManagement>
@@ -49,7 +49,7 @@
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi/</developerConnection>
-    <url>http://www.seasar.org/websvn/listing.php?repname=s2rmi</url>
+    <url>http://svn.seasar.org/browse/?root=s2rmi</url>
   </scm>
   <organization>
     <name>The Seasar Foundation</name>
