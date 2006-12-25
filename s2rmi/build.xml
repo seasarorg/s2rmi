@@ -1,6 +1,6 @@
 <project name="S2RMI" default="dist" basedir=".">
-	<property name="ver" value="1.1.0"/>
-	<property name="releaseDate" value="2006/12/04"/>
+	<property name="ver" value="1.1.1"/>
+	<property name="releaseDate" value="2006/12/25"/>
 
     <target name="rmic">
         <rmic base="build/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>

@@ -19,6 +19,12 @@
 						<li><p>s2rmi-server/pom.xml</p></li>
 					</ul>
 				</dd>
+				<dt>build.xmlの修正</dt>
+				<dd>
+					<ul>
+						<li><p>s2rmi/build.xml</p></li>
+					</ul>
+				</dd>
 				<dt>ドキュメントの修正</dt>
 				<dd>
 					<ul>

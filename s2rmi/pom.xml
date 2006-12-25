@@ -8,7 +8,7 @@
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI Project</name>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.1</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <issueManagement>
@@ -173,7 +173,7 @@
     <dependency>
       <groupId>org.seasar.rmi</groupId>
       <artifactId>s2rmi-server</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.1</version>
       <type>jar</type>
     </dependency>
     <dependency>
