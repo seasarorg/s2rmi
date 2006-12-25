@@ -8,7 +8,7 @@
   <artifactId>s2rmi-server</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI-Server Project</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
