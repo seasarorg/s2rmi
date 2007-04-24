@@ -8,7 +8,7 @@
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
   <name>S2RMI Project</name>
-  <version>1.1.1</version>
+  <version>1.1.2-SNAPSHOT</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <issueManagement>
@@ -79,77 +79,83 @@
       </plugins>
     </pluginManagement>
     <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>generate-rmic-stubs</id>
-              <phase>process-classes</phase>
-              <configuration>
-                <tasks>
-                  <echo>Running rmic</echo>
-                  <path id="rmic.classpath">
-                    <fileset dir="${java.home}/lib">
-                      <include name="tools.jar"/>
-                    </fileset>
-                  </path>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-rmic-stubs</id>
+            <phase>process-classes</phase>
+            <configuration>
+              <tasks>
+                <echo>Running rmic</echo>
+                <path id="rmic.classpath">
+                  <fileset dir="${java.home}/lib">
+                    <include name="tools.jar"/>
+                  </fileset>
+                </path>
 
-                  <mkdir dir="target/classes"/>
-                  <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>
-                </tasks>
-              </configuration>
-              <goals>
-                <goal>run</goal>
-              </goals>
-            </execution>
-          </executions>
-          <dependencies>
-            <dependency>
-              <groupId>com.sun</groupId>
-              <artifactId>tools</artifactId>
-              <scope>system</scope>
-              <version>1.4</version>
-              <systemPath>${java.home}/../lib/tools.jar</systemPath>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>source-jar</id>
-              <phase>package</phase>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <source>1.4</source>
-            <encoding>UTF-8</encoding>
-            <docencoding>UTF-8</docencoding>
-            <charset>UTF-8</charset>
-            <links>
-            	<link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/</link>
-                <link>http://java.sun.com/j2ee/1.4/docs/api/</link>
-                <link>http://aopalliance.sourceforge.net/doc/</link>
-            </links>
-          </configuration>
-          <executions>
-            <execution>
-              <id>javadoc-jar</id>
-              <phase>package</phase>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
+                <mkdir dir="target/classes"/>
+                <rmic base="target/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <scope>system</scope>
+            <version>1.4</version>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>source-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <charset>UTF-8</charset>
+          <links>
+            <link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/</link>
+            <link>http://java.sun.com/j2ee/1.4/docs/api/</link>
+            <link>http://aopalliance.sourceforge.net/doc/</link>
+          </links>
+        </configuration>
+        <executions>
+          <execution>
+            <id>javadoc-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+      </extension>
+    </extensions>
   </build>
   <repositories>
     <repository>
@@ -189,11 +195,13 @@
       <uniqueVersion>false</uniqueVersion>
       <id>maven.seasar.org</id>
       <name>The Seasar Foundation Maven2 Repository</name>
-      <url>scp://www.seasar.org/home/groups/s2rmi/maven/maven2</url>
+      <url>dav:https://www.seasar.org/maven/maven2</url>
     </repository>
-    <site>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
       <id>maven.seasar.org</id>
-      <url>scp://www.seasar.org/home/groups/s2rmi/public_html</url>
-    </site>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>
