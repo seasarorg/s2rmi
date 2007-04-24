@@ -30,7 +30,7 @@ import org.seasar.remoting.common.url.UnopenableURLStreamHandler;
 import org.seasar.remoting.rmi.adaptor.RMIAdaptor;
 
 /**
- * RMIを使用してリモートメソッドの呼び出しを行うコネクタの実装クラス.
+ * RMIを使用してリモートメソッドの呼び出しを行うコネクタの実装クラスです。
  * 
  * @author Kenichiro Murata
  */
@@ -51,9 +51,16 @@ public class RMIConnectorImpl extends URLBasedConnector {
 
     public Object invoke(final String componentName, final Method method, final Object[] args)
             throws RemoteException, Exception {
-        final RMIAdaptor adaptor = getAdaptor();
+        RMIAdaptor adaptor = getAdaptor();
         try {
-            return adaptor.invoke(componentName, method.getName(), args);
+            try {
+                return adaptor.invoke(componentName, method.getName(), args);
+            }
+            catch (final NoSuchObjectException e) {
+                resetAdaptor(adaptor);
+                adaptor = getAdaptor();
+                return adaptor.invoke(componentName, method.getName(), args);
+            }
         }
         catch (final Exception e) {
             resetAdaptorIfNecessary(e, adaptor);
@@ -81,6 +88,8 @@ public class RMIConnectorImpl extends URLBasedConnector {
      * 
      * @param baseURL
      *            ベースURLの文字列です
+     * @throws MalformedURLException
+     *             URLが不正な場合にスローされます
      */
     public void setBaseURLAsString(final String baseURL) throws MalformedURLException {
         setBaseURL(new URL(null, baseURL, new UnopenableURLStreamHandler(DEFAULT_PORT)));
