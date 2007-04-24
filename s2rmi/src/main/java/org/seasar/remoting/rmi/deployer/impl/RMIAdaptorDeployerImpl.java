@@ -113,7 +113,19 @@ public class RMIAdaptorDeployerImpl implements Deployer {
             }
         }
         catch (final Exception e) {
-            logger.log("ERMI0003", new Object[0], e);
+            logger.log("ERMI0002", new Object[0], e);
+        }
+
+        try {
+            if (registry != null) {
+                UnicastRemoteObject.unexportObject(registry, true);
+                if (logger.isDebugEnabled()) {
+                    logger.log("DRMI0007", new Object[0]);
+                }
+            }
+        }
+        catch (final Exception e) {
+            logger.log("ERMI0002", new Object[0], e);
         }
     }
 

@@ -40,4 +40,11 @@ public class RMIAdaptorDeployerImplTest extends S2TestCase {
         assertEquals(remoteNmae[0], RMIAdaptor.EXPORT_NAME);
     }
 
+    public void testDeploy2() throws Exception {
+        deployer.deploy();
+        String[] remoteNmae = LocateRegistry.getRegistry(1108).list();
+
+        assertEquals(remoteNmae[0], RMIAdaptor.EXPORT_NAME);
+    }
+
 }
