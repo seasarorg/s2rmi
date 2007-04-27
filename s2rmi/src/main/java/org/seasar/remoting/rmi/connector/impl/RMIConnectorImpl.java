@@ -91,8 +91,9 @@ public class RMIConnectorImpl extends URLBasedConnector {
      * @throws MalformedURLException
      *             URLが不正な場合にスローされます
      */
-    public void setBaseURLAsString(final String baseURL) throws MalformedURLException {
+    public synchronized void setBaseURLAsString(final String baseURL) throws MalformedURLException {
         setBaseURL(new URL(null, baseURL, new UnopenableURLStreamHandler(DEFAULT_PORT)));
+        adaptorStub = null;
     }
 
     /**

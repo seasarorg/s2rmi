@@ -7,7 +7,11 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.seasar.framework.log.Logger;
 import org.seasar.remoting.common.url.UnopenableURLStreamHandler;
@@ -29,7 +33,7 @@ public class RoundrobinRMIConnectorImpl extends RMIConnectorImpl {
 
     // instance fields
     /** ベースURLのリスト */
-    protected List baseURLs = new ArrayList();
+    protected Map baseURLs = new LinkedHashMap();
 
     /** {@link RMIAdaptor RMIアダプタ}のリスト */
     protected List adaptorStubs = new ArrayList();
@@ -40,26 +44,46 @@ public class RoundrobinRMIConnectorImpl extends RMIConnectorImpl {
     public RoundrobinRMIConnectorImpl() {
     }
 
+    public synchronized void setBaseURLAsString(String baseURL) throws MalformedURLException {
+        baseURLs.clear();
+        addBaseURLAsString(baseURL);
+    }
+
     /**
-     * ベースURLを文字列で追加します。
+     * ベースURLを追加します。
      * 
      * @param baseURL
      *            ベースURLの文字列です
      * @throws MalformedURLException
      *             URLが不正な場合にスローされます
      */
-    public void addBaseURLAsString(String baseURL) throws MalformedURLException {
-        baseURLs.add(new URL(null, baseURL, new UnopenableURLStreamHandler(DEFAULT_PORT)));
+    public synchronized void addBaseURLAsString(final String baseURL) throws MalformedURLException {
+        baseURLs.put(baseURL, new URL(null, baseURL, new UnopenableURLStreamHandler(DEFAULT_PORT)));
+        adaptorStubs.clear();
+    }
+
+    /**
+     * ベースURLを削除します。
+     * 
+     * @param baseURL
+     *            ベースURLの文字列です
+     */
+    public synchronized void removeBaseURLAsString(final String baseURL) {
+        baseURLs.remove(baseURL);
+        adaptorStubs.clear();
     }
 
     public void lookup() throws RemoteException, MalformedURLException, NotBoundException {
-        for (int i = 0; i < baseURLs.size(); ++i) {
-            final URL targetURL = new URL((URL) baseURLs.get(i), RMIAdaptor.EXPORT_NAME);
+        for (final Iterator it = baseURLs.entrySet().iterator(); it.hasNext();) {
+            final Entry entry = (Entry) it.next();
+            final String urlAsString = (String) entry.getKey();
+            final URL url = (URL) entry.getValue();
+            final URL targetURL = new URL(url, RMIAdaptor.EXPORT_NAME);
             try {
                 adaptorStubs.add(Naming.lookup(targetURL.toString()));
             }
             catch (ConnectException e) {
-                logger.log("WRMI0001", new Object[0], e);
+                logger.log("WRMI0001", new Object[] { urlAsString }, e);
             }
         }
         if (adaptorStubs.isEmpty()) {
