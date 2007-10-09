@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="Shift_JIS"?>
 
 <!--
  | Copyright 2001-2005 The Apache Software Foundation.
@@ -35,14 +35,15 @@
     </links>
     <menu name="About">
       <item name="Home" href="index.html"/>
-      <item name="License" href="license.html"/>
-      <item name="Downloads" href="downloads.html"/>
+      <item name="ライセンス" href="license.html"/>
+      <item name="ダウンロード" href="downloads.html"/>
+      <item name="変更履歴" href="changelog.html"/>
     </menu>
     <menu name="Documentation">
       <item name="FAQ" href="faq.html"/>
-      <item name="Install" href="install.html"/>
-      <item name="User Guide" href="user_guide/index.html"/>
-      <item name="Examples Guide" href="examples_guide/index.html"/>
+      <item name="インストール" href="install.html"/>
+      <item name="ユーザガイド" href="user_guide/index.html"/>
+      <item name="サンプルガイド" href="examples_guide/index.html"/>
       <item name="Javadoc" href="../apidocs/index.html"/>
     </menu>
     ${reports}

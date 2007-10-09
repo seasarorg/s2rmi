@@ -4,14 +4,35 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
   <groupId>org.seasar.rmi</groupId>
   <artifactId>s2rmi-server</artifactId>
   <packaging>jar</packaging>
+  <version>1.1.2</version>
+
+  <!-- More Project Information -->
   <name>S2RMI-Server Project</name>
-  <version>1.1.1</version>
   <description></description>
   <url>http://s2rmi.seasar.org/</url>
   <inceptionYear>2005</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>The Seasar Foundation</name>
+    <url>http://www.seasar.org/</url>
+  </organization>
+
+  <!-- Environment Settings -->
+  <issueManagement>
+    <system>JIRA</system>
+    <url><![CDATA[https://www.seasar.org/issues/browse/RMI]]></url>
+  </issueManagement>
   <mailingLists>
     <mailingList>
       <name>Seasar-user</name>
@@ -35,22 +56,39 @@
       <archive>http://ml.seasar.org/archives/seasar-user-en/</archive>
     </mailingList>
   </mailingLists>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
   <scm>
     <connection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi-server/</connection>
     <developerConnection>scm:svn:https://www.seasar.org/svn/s2rmi/trunk/s2rmi-server/</developerConnection>
     <url>http://www.seasar.org/websvn/listing.php?repname=s2rmi</url>
   </scm>
-  <organization>
-    <name>The Seasar Foundation</name>
-    <url>http://www.seasar.org/</url>
-  </organization>
+  <repositories>
+    <repository>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>http://maven.seasar.org/maven2</url>
+    </repository>
+    <repository>
+      <id>local</id>
+      <name>The Seasar Foundation Maven2 local Repository</name>
+      <url>file:repo</url>
+    </repository>
+  </repositories>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Repository</name>
+      <url>scp://www.seasar.org/home/groups/s2rmi/maven/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>true</uniqueVersion>
+      <id>maven.seasar.org</id>
+      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+      <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <!-- Build Settings -->
   <build>
     <defaultGoal>validate</defaultGoal>
     <pluginManagement>
@@ -115,18 +153,8 @@
         </plugin>
       </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>http://maven.seasar.org/maven2</url>
-    </repository>
-    <repository>
-      <id>local</id>
-      <name>The Seasar Foundation Maven2 local Repository</name>
-      <url>file:repo</url>
-    </repository>
-  </repositories>
+
+  <!-- Dependency Settings -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -135,12 +163,4 @@
       <type>jar</type>
     </dependency>
   </dependencies>
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>maven.seasar.org</id>
-      <name>The Seasar Foundation Maven2 Repository</name>
-      <url>scp://www.seasar.org/home/groups/s2rmi/maven/maven2</url>
-    </repository>
-  </distributionManagement>
 </project>

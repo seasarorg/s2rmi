@@ -1,6 +1,8 @@
 <project name="S2RMI" default="dist" basedir=".">
-	<property name="ver" value="1.1.1"/>
-	<property name="releaseDate" value="2006/12/25"/>
+	<tstamp>
+		<format property="releaseDate" pattern="yyyy/MM/dd" locale="ja,JP"/>
+	</tstamp>
+	<property name="zipDir" value="target/site/download/${releaseDate}"/>
 
     <target name="rmic">
         <rmic base="build/classes" classname="org.seasar.remoting.rmi.adaptor.impl.RMIAdaptorImpl"/>

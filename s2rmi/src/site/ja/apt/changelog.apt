@@ -1,0 +1,23 @@
+ ------
+S2RMI Changelog
+ ------
+ ------
+ ------
+
+
+
+Version {1.1.2} (2007/10/09)
+
+* 変更点
+
+** Improvement
+
+    * [{{{https://www.seasar.org/issues/browse/RMI-3}RMI-3}}] - RMI サーバの終了時に RMI レジストリの公開を終了するようにしました．
+
+    * [{{{https://www.seasar.org/issues/browse/RMI-4}RMI-4}}] - クライアント側で NoSuchObjectException が発生した場合に，スタブを取得し直してリトライするようにしました．
+
+    * [{{{https://www.seasar.org/issues/browse/RMI-6}RMI-6}}] - RMIConnectorImpl のベース URL が変更された場合や，RoundrobinRMIConnectorImpl にベース URL が追加・削除された場合は RMIAdaptor のスタブをリセットするようにしました．
+    
+** New Feature
+
+    * [{{{https://www.seasar.org/issues/browse/RMI-5}RMI-5}}] - ラウンドロビンRMIコネクタを追加しました．
