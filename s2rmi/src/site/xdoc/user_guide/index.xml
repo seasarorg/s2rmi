@@ -6,19 +6,11 @@
 	<body>
 		<section name="Table of Content">
 			<ul>
-				<li><p><a href="#About">About</a></p></li>
 				<li><p><a href="#Basic Usage">Basic Usage</a></p></li>
 				<li><p><a href="#Service">Service</a></p></li>
 				<li><p><a href="#Server Settings">Server Settings</a></p></li>
 				<li><p><a href="#Client Settings">Client Settings</a></p></li>
 			</ul>
-		</section>
-
-		<section name="About">
-			<p>
-				This is a document for <code>S2RMI-1.0.1</code>.
-				Documents for older versions of S2RMI are included in their respective distribution archive file.
-			</p>
 		</section>
 
 		<section name="Basic Usage">

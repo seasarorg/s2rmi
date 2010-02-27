@@ -9,7 +9,7 @@
   <groupId>org.seasar.rmi</groupId>
   <artifactId>s2rmi</artifactId>
   <packaging>jar</packaging>
-  <version>1.1.3-SNAPSHOT</version>
+  <version>1.1.3</version>
 
   <!-- More Project Information -->
   <name>S2RMI Project</name>
@@ -87,8 +87,8 @@
       <url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
     </snapshotRepository>
     <site>
-      <id>www.seasar.org</id>
-      <url>scp://www.seasar.org/home/groups/s2rmi/public_html</url>
+      <id>maven.seasar.org</id>
+      <url>dav:https://www.seasar.org/site/s2rmi/</url>
     </site>
   </distributionManagement>
 
@@ -224,6 +224,7 @@
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
         <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
       </extension>
     </extensions>
   </build>

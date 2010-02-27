@@ -19,19 +19,14 @@
 						<li><p>s2rmi-server/pom.xml</p></li>
 					</ul>
 				</dd>
-				<dt>build.xmlの修正</dt>
-				<dd>
-					<ul>
-						<li><p>s2rmi/build.xml</p></li>
-					</ul>
-				</dd>
 				<dt>ドキュメントの修正</dt>
 				<dd>
 					<ul>
-						<li><p>s2rmi/src/site/index.xml</p></li>
+						<li><p>s2rmi/src/site/xdoc/index.xml</p></li>
 						<li><p>s2rmi/src/site/downloads.xml</p></li>
-						<li><p>s2rmi/src/site/ja/index.xml</p></li>
-						<li><p>s2rmi/src/site/ja/downloads.xml</p></li>
+						<li><p>s2rmi/src/site/ja/xdoc/index.xml</p></li>
+						<li><p>s2rmi/src/site/ja/xdoc/downloads.xml</p></li>
+						<li><p>s2rmi/src/site/ja/apt/changelog.xml</p></li>
 					</ul>
 				</dd>
 			</dl>
@@ -53,22 +48,10 @@
 <kbd>mvn clean deploy</kbd>
 </source>
 				</dd>
-				<dt>サイトの作成</dt>
-				<dd>
-<source>
-<kbd>mvn site</kbd>
-</source>
-				</dd>
-				<dt>配布ファイルの作成</dt>
-				<dd>
-<source>
-<kbd>ant</kbd>
-</source>
-				</dd>
 				<dt>サイトのデプロイ</dt>
 				<dd>
 <source>
-<kbd>mvn site:deploy</kbd>
+<kbd>mvn site-deploy</kbd>
 </source>
 				</dd>
 			</dl>
